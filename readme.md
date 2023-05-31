@@ -1,4 +1,4 @@
-# Build a Java scaffolding all my own
+# Build a Java scaffolding on my own
 
 ## Generate from start.spring.io 
 
