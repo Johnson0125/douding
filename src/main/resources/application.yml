@@ -12,14 +12,6 @@ server:
     buffer-size: 2048
     direct-buffers: true
 
-datasource:
-  db:
-    databaseDriver: com.mysql.cj.jdbc.Driver
-    username: root
-    password: root
-    databaseUrl: jdbc:mysql://127.0.0.1:3306/douding?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&nullCatalogMeansCurrent=true
-
-
 ebean:
   packages: com.douding.douding.domain
   ddl:
@@ -39,26 +31,9 @@ ebean:
       txnCommit: none
 #  mappingLocations: classpath:/ebean-xml-mappings
 spring:
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driverClassName: com.mysql.cj.jdbc.Driver
-    username: root
-    password: root
-#    url: jdbc:mysql://127.0.0.1:3306/douding?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&nullCatalogMeansCurrent=true
-    hikari:
-      maximum-pool-size: 10  # ?????
-      minimum-idle: 5 # ?????
-      connection-timeout: 2000 # ????????? ??30s
-      pool-name: ebean-hikari # ?????
-      idle-timeout: 600000 # ?????????????????????????????
-      auto-commit: true # ??????
-      max-lifetime: 1800000 # ?????????30??
-      # connection-test-query: SELECT 1  # ??????????
-      validation-timeout: 1000 #
-      # schema: ??????? postgresql ???????
-      jdbc-url: jdbc:mysql://127.0.0.1:3306/douding?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&nullCatalogMeansCurrent=true
-
-
+  profiles:
+    active: dev
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
+

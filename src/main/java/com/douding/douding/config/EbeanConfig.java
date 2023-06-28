@@ -3,23 +3,18 @@ package com.douding.douding.config;
 import io.ebean.Database;
 import io.ebean.DatabaseFactory;
 import io.ebean.config.DatabaseConfig;
-import jakarta.annotation.Resource;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
-import java.util.Properties;
 
+/**
+ * @author zsit
+ */
 @Configuration
 public class EbeanConfig {
 
-    @Bean(name = "datasource")
-    @ConfigurationProperties("spring.datasource")
-    public DataSource dataSource() {
-        return DataSourceBuilder.create().build();
-    }
+
 
     @Bean
     public Database database(DataSource dataSource){
@@ -35,6 +30,7 @@ public class EbeanConfig {
 //        config.loadFromProperties(properties);
 
         config.setDataSource(dataSource);
+        config.setDefaultServer(true);
 
         return DatabaseFactory.create(config);
     }
