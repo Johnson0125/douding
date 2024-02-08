@@ -1,0 +1,38 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+  undertow:
+    threads:
+      io: 16
+      worker: 120
+    buffer-size: 2048
+    direct-buffers: true
+
+ebean:
+  packages: com.doubao.douding
+  migration:
+    run: true
+  debug:
+    sql: true
+    lazyload: false
+    logging:
+      logfilesharing: all
+      directory: logs
+      iud: sql
+      query: sql
+      sqlquery: sql
+      txnCommit: none
+#  mappingLocations: classpath:/ebean-xml-mappings
+spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  api-docs:
+    enabled: true
+  swagger-ui:
+    persistAuthorization: true
+

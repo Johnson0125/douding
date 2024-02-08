@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.2.0</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.doubao</groupId>
+	<artifactId>douding</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>douding</name>
+	<description>Project with Base Function</description>
+
+	<properties>
+		<java.version>21</java.version>
+		<ebean.version>13.25.0</ebean.version>
+		<ebean.migration.version>13.11.1</ebean.migration.version>
+		<ebean.mocker.version>13.7.0</ebean.mocker.version>
+		<ebean-spring-txn.version>13.25.2</ebean-spring-txn.version>
+		<springboot.version>3.2.1</springboot.version>
+		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+		<guava.version>33.0.0-jre</guava.version>
+	</properties>
+
+	<dependencies>
+		<!--<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.tomcat</groupId>
+					<artifactId>tomcat-jdbc</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
+
+	<!--	<dependency>
+			<groupId>io.ebean</groupId>
+			<artifactId>ebean</artifactId>
+			<version>${ebean.version}</version>
+		</dependency>-->
+
+		<dependency>
+			<groupId>io.ebean</groupId>
+			<artifactId>ebean-mysql</artifactId>
+			<version>${ebean.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.ebean</groupId>
+			<artifactId>ebean-querybean</artifactId>
+			<version>${ebean.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.ebean</groupId>
+			<artifactId>ebean-spring-txn</artifactId>
+			<version>${ebean-spring-txn.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.avaje</groupId>
+			<artifactId>avaje-applog</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.ebean</groupId>
+			<artifactId>ebean-migration</artifactId>
+			<version>${ebean.migration.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>8.2.0</version>
+		</dependency>
+
+		<!--test start-->
+
+		<!--<dependency>
+			<groupId>org.springframework.restdocs</groupId>
+			<artifactId>spring-restdocs-mockmvc</artifactId>
+			<scope>test</scope>
+		</dependency>-->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/io.ebean/ebean-mocker -->
+		<dependency>
+			<groupId>io.ebean</groupId>
+			<artifactId>ebean-mocker</artifactId>
+			<version>${ebean.mocker.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.ebean</groupId>
+			<artifactId>ebean-test</artifactId>
+			<version>${ebean.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.ebean/ebean-ddl-generator -->
+		<dependency>
+			<groupId>io.ebean</groupId>
+			<artifactId>ebean-ddl-generator</artifactId>
+			<version>${ebean.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${org.mapstruct.version}</version>
+		</dependency>
+
+		<!--fix jdk17 could not run ebean migration-->
+		<!-- API, java.xml.bind module https://zhuanlan.zhihu.com/p/666718503 -->
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
+		<!-- Runtime, com.sun.xml.bind module -->
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>2.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<!-- end  fix jdk17 could not run ebean migration -->
+	</dependencies>
+
+
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+
+			<plugin>
+				<groupId>io.repaint.maven</groupId>
+				<artifactId>tiles-maven-plugin</artifactId>
+				<version>2.22</version>
+				<extensions>true</extensions>
+				<configuration>
+					<tiles>
+						<!-- other tiles ... -->
+						<tile>io.ebean.tile:enhancement:13.25.0</tile>
+					</tiles>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>io.ebean</groupId>
+				<artifactId>ebean-maven-plugin</artifactId>
+				<version>13.25.2</version>
+				<executions>
+					<execution>
+						<id>main</id>
+						<phase>process-classes</phase>
+						<configuration>
+							<transformArgs>debug=1</transformArgs>
+						</configuration>
+						<goals>
+							<goal>enhance</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.10.1</version>
+				<configuration>
+					<source>21</source>
+					<target>21</target>
+					<annotationProcessorPaths>
+						<path>
+							<artifactId>querybean-generator</artifactId>
+							<groupId>io.ebean</groupId>
+							<version>${ebean.version}</version>
+						</path>
+
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${org.mapstruct.version}</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>1.18.30</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok-mapstruct-binding</artifactId>
+							<version>0.2.0</version>
+						</path>
+						<!-- other annotation processors -->
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

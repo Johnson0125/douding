@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <createTable name="user_info" identityType="identity" pkName="pk_user_info">
+            <column name="id" type="bigint" primaryKey="true"/>
+            <column name="username" type="varchar(50)" notnull="true" comment="username"/>
+            <column name="telephone" type="bigint" comment="telephone"/>
+            <column name="gender" type="integer(2)" comment="gender"/>
+            <column name="salt" type="bigint(12)"/>
+            <column name="email" type="varchar" comment="email"/>
+            <column name="user_status" type="integer" comment="user''s status info"/>
+            <column name="role" type="integer" comment="role of user"/>
+            <column name="password" type="varchar"/>
+            <column name="version" type="bigint" notnull="true"/>
+            <column name="when_created" type="timestamp" notnull="true"/>
+            <column name="when_modified" type="timestamp" notnull="true"/>
+            <column name="who_created" type="varchar" notnull="true"/>
+            <column name="who_modified" type="varchar" notnull="true"/>
+        </createTable>
+    </changeSet>
+</migration>

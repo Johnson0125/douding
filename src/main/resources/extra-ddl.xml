@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<extra-ddl xmlns="http://ebean-orm.github.io/xml/ns/extraddl">
+
+    <ddl-script name="1 product view">
+
+    </ddl-script>
+
+    <ddl-script name="2 promotion views">
+
+    </ddl-script>
+
+</extra-ddl>
