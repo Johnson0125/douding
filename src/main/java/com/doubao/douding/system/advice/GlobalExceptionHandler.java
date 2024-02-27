@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * @Author Johnson
- * @Date
- * @Description: common exception handler
+ * @author Johnson
+ * @date
+ * @description: common exception handler
  **/
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
 
     @ResponseBody
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)// 设置状态码为500
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 设置状态码为500
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public String postExceptionHandler(MethodArgumentNotValidException e) {
         log.error("error occur", e);
@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseBody
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)// 设置状态码为500
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 设置状态码为500
     @ExceptionHandler(ConstraintViolationException.class)
     public String paramExceptionHandler(ConstraintViolationException e) {
         log.error("error occur", e);
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)// 设置状态码为500
+    @ResponseStatus(HttpStatus.NOT_FOUND) // 设置状态码为500
     @ExceptionHandler(DataNotFoundException.class)
     public String dataNotFoundException(ConstraintViolationException e) {
         log.error("error occur", e);

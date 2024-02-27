@@ -17,10 +17,10 @@ public class OpenApiConfig {
 
     @Bean
     public OpenAPI openAPI() {
-        return new OpenAPI().info(new Info()
-                                      .title("document of Douding")
-                                      .description("document of Douding")
-                                      .contact(new Contact().name("Johnson").email("superzsen@126.com"))
-                                      .version("0.0.1"));
+        return new OpenAPI().info(new Info().title("document of Douding")
+                                            .description("document of Douding")
+                                            .contact(new Contact().name("Johnson").email("superzsen@126.com"))
+                                            .version("0.0.1"));
     }
+
 }

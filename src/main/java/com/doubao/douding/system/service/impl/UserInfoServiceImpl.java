@@ -63,4 +63,5 @@ public class UserInfoServiceImpl implements UserInfoService {
         List<UserInfo> all = UserInfo.FIND.all();
         return userInfoMapper.toDTOList(all);
     }
+
 }

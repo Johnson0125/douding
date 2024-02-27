@@ -3,10 +3,10 @@ package com.doubao.douding.system.enums;
 import lombok.Getter;
 
 /**
- * @author: Johnson
- * @create: 2023-11-23
- * @Description: user enum
- */
+ * @author Johnson
+ * @date
+ * @description: user enum
+ **/
 public class UserEnum {
 
     /**
@@ -14,6 +14,7 @@ public class UserEnum {
      */
     @Getter
     public enum UserStatusEnum {
+
         LOCKED(0, "LOCKED"),
         NORMAL(1, "NORMAL"),
         DISABLED(2, "DISABLED");
@@ -50,12 +51,13 @@ public class UserEnum {
             }
             return null;
         }
+
     }
 
     @Getter
     public enum GenderEnum {
-        MALE(0, "MALE"),
-        FEMALE(1, "FEMALE");
+
+        MALE(0, "MALE"), FEMALE(1, "FEMALE");
 
         private Integer code;
 

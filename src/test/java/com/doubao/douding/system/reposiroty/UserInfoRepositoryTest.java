@@ -18,10 +18,13 @@ class UserInfoRepositoryTest {
     @Test
     void givenUserInfo_whenAdd_thenOk() {
         // given
-        UserInfo userInfo = UserInfo.builder().email("1@qq.com").username("username")
-                                    .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
-                                    .gender(UserEnum.GenderEnum.FEMALE.getCode())
-                                    .telephone("1854745213").build();
+        UserInfo userInfo = UserInfo.builder()
+            .email("1@qq.com")
+            .username("username")
+            .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
+            .gender(UserEnum.GenderEnum.FEMALE.getCode())
+            .telephone("1854745213")
+            .build();
 
         // when
         userInfo.save();
@@ -33,8 +36,9 @@ class UserInfoRepositoryTest {
         assertThat(userInfoFromDb).isEqualTo(userInfo);
         assertEquals("username should be equal", "username", userInfo.getUsername());
         assertNotNull("user's id should not be null", userInfo.getId());
-        assertEquals(
-            "user's gender should be Female", UserEnum.GenderEnum.FEMALE.getCode(), userInfoFromDb.getGender());
+        assertEquals("user's gender should be Female", UserEnum.GenderEnum.FEMALE.getCode(),
+                userInfoFromDb.getGender());
 
     }
+
 }

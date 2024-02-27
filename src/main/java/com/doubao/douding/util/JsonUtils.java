@@ -17,8 +17,7 @@ import java.util.Map;
  */
 public class JsonUtils {
 
-    private static ObjectMapper OBJECT_MAPPER = new ObjectMapper()
-        .registerModule(new JavaTimeModule())
+    private static ObjectMapper OBJECT_MAPPER = new ObjectMapper().registerModule(new JavaTimeModule())
         .findAndRegisterModules()
         .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
@@ -28,7 +27,8 @@ public class JsonUtils {
     public static Map toMap(String json) {
         try {
             return OBJECT_MAPPER.readValue(json, Map.class);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -42,7 +42,8 @@ public class JsonUtils {
         };
         try {
             return OBJECT_MAPPER.readValue(json, typeReference);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -50,7 +51,8 @@ public class JsonUtils {
     public static List toList(String json) {
         try {
             return OBJECT_MAPPER.readValue(json, List.class);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -64,26 +66,28 @@ public class JsonUtils {
         };
         try {
             return OBJECT_MAPPER.readValue(json, typeReference);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
      * Converts a JSON string to a List of objects using the provided TypeReference.
-     * Example usage:
-     * {@code TypeReference<List<UserInfoDTO>> listTypeReference = new TypeReference<List<UserInfoDTO>>(){};}
-     *
+     * Example usage: {@code TypeReference<List<UserInfoDTO>> listTypeReference = new
+     * TypeReference<List<UserInfoDTO>>(){};}
      * @param json The JSON string to be converted.
      * @param type The TypeReference representing the target List type.
-     * @param <T>  The generic type of the elements in the List.
+     * @param <T> The generic type of the elements in the List.
      * @return A List of objects parsed from the JSON string.
-     * @throws RuntimeException If there is an exception during the deserialization process.
+     * @throws RuntimeException If there is an exception during the deserialization
+     * process.
      */
     public static <T> List<T> toList(String json, TypeReference<List<T>> type) {
         try {
             return OBJECT_MAPPER.readValue(json, type);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -92,7 +96,8 @@ public class JsonUtils {
         JavaType type = OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, clazz);
         try {
             return OBJECT_MAPPER.readValue(json, type);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -100,7 +105,8 @@ public class JsonUtils {
     public static String toJsonString(Object object) {
         try {
             return OBJECT_MAPPER.writeValueAsString(object);
-        } catch (JsonProcessingException e) {
+        }
+        catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -109,7 +115,8 @@ public class JsonUtils {
         SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern);
         try {
             return OBJECT_MAPPER.writer(dateFormat).writeValueAsString(object);
-        } catch (JsonProcessingException e) {
+        }
+        catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -117,7 +124,8 @@ public class JsonUtils {
     public static <T> T toObject(String json, Class<T> valueType) {
         try {
             return OBJECT_MAPPER.readValue(json, valueType);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
 
         }
@@ -132,21 +140,23 @@ public class JsonUtils {
     }
 
     /**
-     * Converts a JSON string to an object using the provided TypeReference.
-     * Example usage:
-     * {@code JsonUtils.parseObject(response, new TypeReference<ResultBean<UserInfo>>(){});}
-     *
+     * Converts a JSON string to an object using the provided TypeReference. Example
+     * usage: {@code JsonUtils.parseObject(response, new
+     * TypeReference<ResultBean<UserInfo>>(){});}
      * @param str The JSON string to be converted.
      * @param type The TypeReference representing the target List type.
-     * @param <T>  The generic type of the elements in the List.
+     * @param <T> The generic type of the elements in the List.
      * @return An object parsed from the JSON string.
-     * @throws RuntimeException If there is an exception during the deserialization process.
+     * @throws RuntimeException If there is an exception during the deserialization
+     * process.
      */
     public static <T> T parseObject(String str, TypeReference<T> type) {
         try {
             return OBJECT_MAPPER.readValue(str, type);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
 }

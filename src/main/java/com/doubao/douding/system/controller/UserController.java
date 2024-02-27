@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Johnson
- */
+ * @date
+ * @description: UserController
+ **/
 @RestController
 @RequestMapping("/userInfo")
 @RequiredArgsConstructor
@@ -61,4 +63,5 @@ public class UserController {
     public ResponseEntity<List<UserInfoDTO>> list() {
         return ResponseEntity.ok(userInfoService.list());
     }
+
 }

@@ -6,10 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author Johnson
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class BaseDTO {
+
     @NotNull(groups = {Update.class})
     Long id;
+
 }

@@ -1,6 +1,5 @@
 package com.doubao.douding.integration.system;
 
-import com.doubao.douding.dto.ResultBean;
 import com.doubao.douding.system.dto.UserInfoDTO;
 import com.doubao.douding.system.enums.UserEnum;
 import jakarta.annotation.Resource;
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -37,15 +35,16 @@ class UserControllerIntegrationTest {
     @Test
     @SneakyThrows
     void givenUserInfo_whenAddUser_thenStatusOk() {
-        UserInfoDTO userInfoDTO = UserInfoDTO.builder().email("1@qq.com").username("username")
-                                          .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
-                                          .gender(UserEnum.GenderEnum.FEMALE.getCode())
-                                          .telephone("18547452135").build();
+        UserInfoDTO userInfoDTO = UserInfoDTO.builder()
+            .email("1@qq.com")
+            .username("username")
+            .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
+            .gender(UserEnum.GenderEnum.FEMALE.getCode())
+            .telephone("18547452135")
+            .build();
 
         ResponseEntity<UserInfoDTO> response = restTemplate.exchange("/userInfo/add", HttpMethod.POST,
-                                                                                 new HttpEntity<UserInfoDTO>(userInfoDTO),
-                                                                                 UserInfoDTO.class
-        );
+                new HttpEntity<UserInfoDTO>(userInfoDTO), UserInfoDTO.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isNotNull();
         UserInfoDTO data = response.getBody();

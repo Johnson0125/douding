@@ -4,11 +4,12 @@ import io.ebean.config.CurrentUserProvider;
 import org.springframework.stereotype.Component;
 
 /**
- * @author zhangs890
- * @Description get current login user
+ * @author Johnson
+ * @description get current login user
  */
 @Component
 public class CurrentUser implements CurrentUserProvider {
+
     /**
      * Return the current user id.
      * <p>
@@ -20,4 +21,5 @@ public class CurrentUser implements CurrentUserProvider {
     public Object currentUser() {
         return "test";
     }
+
 }

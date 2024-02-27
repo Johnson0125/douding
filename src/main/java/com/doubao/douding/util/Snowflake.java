@@ -6,11 +6,11 @@ import java.time.Instant;
 import java.util.Enumeration;
 
 /**
- * Distributed Sequence Generator.
- * Inspired by Twitter snowflake: https://github.com/twitter/snowflake/tree/snowflake-2010
+ * Distributed Sequence Generator. Inspired by Twitter snowflake:
+ * https://github.com/twitter/snowflake/tree/snowflake-2010
  *
- * This class should be used as a Singleton.
- * Make sure that you create and reuse a Single instance of Snowflake per node in your distributed system cluster.
+ * This class should be used as a Singleton. Make sure that you create and reuse a Single
+ * instance of Snowflake per node in your distributed system cluster.
  */
 public class Snowflake {
 
@@ -21,20 +21,26 @@ public class Snowflake {
     }
 
     private static final int UNUSED_BITS = 1; // Sign bit, Unused (always set to 0)
+
     private static final int EPOCH_BITS = 41;
+
     private static final int NODE_ID_BITS = 10;
+
     private static final int SEQUENCE_BITS = 12;
 
     private static final long MAX_NODE_ID = (1L << NODE_ID_BITS) - 1;
+
     private static final long MAX_SEQUENCE = (1L << SEQUENCE_BITS) - 1;
 
     // Custom Epoch 2024-01-01 00:00:00
     private static final long DEFAULT_CUSTOM_EPOCH = 1404038400000L;
 
     private final long nodeId;
+
     private final long customEpoch;
 
     private volatile long lastTimestamp = -1L;
+
     private volatile long sequence = 0L;
 
     // Create Snowflake with a nodeId and custom epoch
@@ -77,9 +83,7 @@ public class Snowflake {
 
         lastTimestamp = currentTimestamp;
 
-        long id = currentTimestamp << (NODE_ID_BITS + SEQUENCE_BITS)
-            | (nodeId << SEQUENCE_BITS)
-            | sequence;
+        long id = currentTimestamp << (NODE_ID_BITS + SEQUENCE_BITS) | (nodeId << SEQUENCE_BITS) | sequence;
 
         return id;
     }
@@ -112,7 +116,8 @@ public class Snowflake {
                 }
             }
             nodeId = sb.toString().hashCode();
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             nodeId = new SecureRandom().nextInt();
         }
         nodeId = nodeId & MAX_NODE_ID;
@@ -127,17 +132,13 @@ public class Snowflake {
         long nodeId = (id & maskNodeId) >> SEQUENCE_BITS;
         long sequence = id & maskSequence;
 
-        return new long[] {
-            timestamp,
-            nodeId,
-            sequence
-        };
+        return new long[] { timestamp, nodeId, sequence };
     }
 
     @Override
     public String toString() {
-        return "Snowflake Settings [EPOCH_BITS=" + EPOCH_BITS + ", NODE_ID_BITS=" + NODE_ID_BITS
-            + ", SEQUENCE_BITS=" + SEQUENCE_BITS + ", CUSTOM_EPOCH=" + customEpoch
-            + ", NodeId=" + nodeId + "]";
+        return "Snowflake Settings [EPOCH_BITS=" + EPOCH_BITS + ", NODE_ID_BITS=" + NODE_ID_BITS + ", SEQUENCE_BITS="
+                + SEQUENCE_BITS + ", CUSTOM_EPOCH=" + customEpoch + ", NodeId=" + nodeId + "]";
     }
+
 }

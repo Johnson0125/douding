@@ -31,8 +31,9 @@ import static org.mockito.BDDMockito.willReturn;
  * @create 2023-12-13
  * @Description unit test for userInfoService
  */
-@ExtendWith({MockitoExtension.class})
+@ExtendWith({ MockitoExtension.class })
 class UserInfoServiceTest {
+
     @InjectMocks
     private UserInfoServiceImpl userInfoService;
 
@@ -48,10 +49,13 @@ class UserInfoServiceTest {
 
     @BeforeEach
     void setUp() {
-        userInfo = UserInfo.builder().email("1@qq.com").username("username")
-                           .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
-                           .gender(UserEnum.GenderEnum.FEMALE.getCode())
-                           .telephone("1854745213").build();
+        userInfo = UserInfo.builder()
+            .email("1@qq.com")
+            .username("username")
+            .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
+            .gender(UserEnum.GenderEnum.FEMALE.getCode())
+            .telephone("1854745213")
+            .build();
         userInfo.setId(1L);
 
         staticFinder = WithStaticFinder.use(UserInfo.class, finder);
@@ -118,7 +122,7 @@ class UserInfoServiceTest {
         // given
         willDoNothing().given(finder).deleteById(1L);
 
-        //when
+        // when
         userInfoService.delete(1L);
 
         // then

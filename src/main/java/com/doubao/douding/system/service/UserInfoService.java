@@ -35,8 +35,8 @@ public interface UserInfoService {
     void delete(Long userId);
 
     /**
-     *
      * @return list user
      */
     List<UserInfoDTO> list();
+
 }

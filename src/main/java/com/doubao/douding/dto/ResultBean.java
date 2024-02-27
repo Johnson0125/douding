@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @Setter
 public class ResultBean<T> {
+
     public ResultBean() {
         this.code = HttpStatus.OK.value();
     }
@@ -33,6 +34,7 @@ public class ResultBean<T> {
     }
 
     private Integer code;
+
     private String message;
 
     private T data;

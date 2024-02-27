@@ -7,9 +7,9 @@ import java.util.List;
 import org.mapstruct.Mapper;
 
 /**
- * @Author Johnson
- * @Date 2023-12-19
- * @Description: translate between entity and dto
+ * @author Johnson
+ * @date
+ * @description: translate between entity and dto
  **/
 @Mapper(builder = @org.mapstruct.Builder(disableBuilder = true), componentModel = "spring")
 public interface UserInfoMapper {

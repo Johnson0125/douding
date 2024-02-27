@@ -30,4 +30,5 @@ public class EbeanConfig {
 
         return DatabaseFactory.create(config);
     }
+
 }

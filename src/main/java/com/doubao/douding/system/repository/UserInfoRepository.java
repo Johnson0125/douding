@@ -5,6 +5,11 @@ import io.ebean.BeanRepository;
 import io.ebean.Database;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author Johnson
+ * @date
+ * @description: UserInfoRepository
+ **/
 @Repository
 public class UserInfoRepository extends BeanRepository<Long, UserInfo> {
 

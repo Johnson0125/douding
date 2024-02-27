@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * @author zsit
+ * @author Johnson
  */
 @Entity
 @Table(name = "user_info")
@@ -24,6 +24,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UserInfo extends BaseDomain {
+
     public static final UserInfoFinder FIND = new UserInfoFinder(UserInfo.class);
 
     @NotNull

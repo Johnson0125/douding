@@ -23,36 +23,19 @@ import org.hibernate.validator.constraints.Range;
 @NoArgsConstructor
 @Schema
 public class UserInfoDTO extends BaseDTO {
-    @NotBlank(groups = {
-        Create.class,
-        Update.class
-    })
+
+    @NotBlank(groups = { Create.class, Update.class })
     private String username;
 
-    @NotNull(groups = {
-        Create.class,
-        Update.class
-    })
-    @Pattern(regexp = "^1+\\d{10}$", message = "telephone should be valid", groups = {
-        Create.class,
-        Update.class
-    })
+    @NotNull(groups = { Create.class, Update.class })
+    @Pattern(regexp = "^1+\\d{10}$", message = "telephone should be valid", groups = { Create.class, Update.class })
     private String telephone;
 
-    @Range(min = 0, max = 1, message = "gender is not valid", groups = {
-        Create.class,
-        Update.class
-    })
+    @Range(min = 0, max = 1, message = "gender is not valid", groups = { Create.class, Update.class })
     private Integer gender;
 
-    @Email(groups = {
-        Create.class,
-        Update.class
-    })
-    @NotBlank(message = "email could not be NULL", groups = {
-        Create.class,
-        Update.class
-    })
+    @Email(groups = { Create.class, Update.class })
+    @NotBlank(message = "email could not be NULL", groups = { Create.class, Update.class })
     private String email;
 
     private Integer userStatus;
@@ -63,4 +46,5 @@ public class UserInfoDTO extends BaseDTO {
 
     @Length(12)
     private Long salt;
+
 }

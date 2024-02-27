@@ -9,6 +9,7 @@ import java.io.IOException;
  * @Description generate db migration according to Domain
  */
 public class MigrationGenerator {
+
     public static void main(String[] args) throws IOException {
 
         DbMigration migration = DbMigration.create();
@@ -19,4 +20,5 @@ public class MigrationGenerator {
 
         migration.generateMigration();
     }
+
 }

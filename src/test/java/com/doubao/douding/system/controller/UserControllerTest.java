@@ -54,17 +54,23 @@ class UserControllerTest {
     @BeforeEach
     public void setup() {
         userInfoDTOS = Lists.newArrayList();
-        userInfoDTO = UserInfoDTO.builder().email("1@qq.com").username("username")
-                                 .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
-                                 .gender(UserEnum.GenderEnum.FEMALE.getCode())
-                                 .telephone("18547452131").build();
+        userInfoDTO = UserInfoDTO.builder()
+            .email("1@qq.com")
+            .username("username")
+            .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
+            .gender(UserEnum.GenderEnum.FEMALE.getCode())
+            .telephone("18547452131")
+            .build();
         userInfoDTO.setId(1L);
         userInfoDTOS.add(userInfoDTO);
 
-        UserInfoDTO userInfoDTO = UserInfoDTO.builder().email("2@qq.com").username("anotherName")
-                                             .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
-                                             .gender(UserEnum.GenderEnum.MALE.getCode())
-                                             .telephone("18547452131").build();
+        UserInfoDTO userInfoDTO = UserInfoDTO.builder()
+            .email("2@qq.com")
+            .username("anotherName")
+            .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
+            .gender(UserEnum.GenderEnum.MALE.getCode())
+            .telephone("18547452131")
+            .build();
         userInfoDTO.setId(2L);
         userInfoDTOS.add(userInfoDTO);
 
@@ -75,28 +81,34 @@ class UserControllerTest {
     @SneakyThrows
     void givenUserInfo_whenAddUser_thenStatusOk() {
 
-        UserInfoDTO resultUser = UserInfoDTO.builder().email("1@qq.com").username("username")
-                                            .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
-                                            .gender(UserEnum.GenderEnum.FEMALE.getCode())
-                                            .telephone("18547452131").build();
+        UserInfoDTO resultUser = UserInfoDTO.builder()
+            .email("1@qq.com")
+            .username("username")
+            .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
+            .gender(UserEnum.GenderEnum.FEMALE.getCode())
+            .telephone("18547452131")
+            .build();
         resultUser.setId(1L);
 
         // remember here any instance of UserInfo, to make right
-        // when we did not have hashcode and equals, we can save any(UserInfo.class), then it works well
+        // when we did not have hashcode and equals, we can save any(UserInfo.class), then
+        // it works well
         given(userInfoService.save(userInfoDTO)).willReturn(resultUser);
-        //        when(userInfoService.save(userInfoDTO)).thenReturn(resultUser);
+        // when(userInfoService.save(userInfoDTO)).thenReturn(resultUser);
 
-        mockMvc.perform(post("/userInfo/add")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .accept(MediaType.APPLICATION_JSON)
-                            .content(JsonUtils.toJsonString(userInfoDTO)))
-               .andExpect(status().isCreated())
-               .andDo(print())
-               .andExpect(jsonPath("$.email").value(resultUser.getEmail()))
-               .andExpect(jsonPath("$.username").value(resultUser.getUsername()))
-               .andExpect(jsonPath("$.telephone").value(resultUser.getTelephone()))
-               .andExpect(jsonPath("$.id").value(resultUser.getId()))
-               .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+        mockMvc
+            .perform(post("/userInfo/add").contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(JsonUtils.toJsonString(userInfoDTO)))
+            .andExpect(status().isCreated())
+            .andDo(print())
+            .andExpect(jsonPath("$.email").value(resultUser.getEmail()))
+            .andExpect(jsonPath("$.username").value(resultUser.getUsername()))
+            .andExpect(jsonPath("$.telephone").value(resultUser.getTelephone()))
+            .andExpect(jsonPath("$.id").value(resultUser.getId()))
+            .andReturn()
+            .getResponse()
+            .getContentAsString(StandardCharsets.UTF_8);
     }
 
     // get user
@@ -123,10 +135,8 @@ class UserControllerTest {
     void givenInvalidId_whenGetUserInfo_thenNull() {
         given(userInfoService.findById(999L)).willReturn(null);
 
-        mockMvc.perform(get("/userInfo/999")
-                            .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isNotFound());
-        //.andExpect(status().isNotFound());
+        mockMvc.perform(get("/userInfo/999").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
+        // .andExpect(status().isNotFound());
     }
 
     // generate user password
@@ -142,11 +152,11 @@ class UserControllerTest {
         when(userInfoService.update(userInfoDTO)).thenReturn(userInfoDTO);
 
         // when
-        mockMvc.perform(put("/userInfo/update")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(JsonUtils.toJsonString(userInfoDTO)))
-               .andExpect(status().isAccepted())
-               .andExpect(jsonPath("$.email").value(mail));
+        mockMvc
+            .perform(put("/userInfo/update").contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtils.toJsonString(userInfoDTO)))
+            .andExpect(status().isAccepted())
+            .andExpect(jsonPath("$.email").value(mail));
 
         // then
         verify(userInfoService, times(1)).update(userInfoDTO);
@@ -156,8 +166,7 @@ class UserControllerTest {
     @Test
     @SneakyThrows
     void givenUser_whenDelete_thenOk() {
-        mockMvc.perform(delete("/userInfo/1")
-                            .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+        mockMvc.perform(delete("/userInfo/1").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 
         willDoNothing().given(userInfoService).delete(1L);
 
@@ -170,21 +179,23 @@ class UserControllerTest {
     void givenUserList_whenList_thenOk() {
 
         // given userInfoDTOS
-        //when(userInfoService.list()).thenReturn(userInfoDTOS);
-        //        willReturn(userInfoDTOS).given(userInfoService).list();
+        // when(userInfoService.list()).thenReturn(userInfoDTOS);
+        // willReturn(userInfoDTOS).given(userInfoService).list();
         given(userInfoService.list()).willReturn(userInfoDTOS);
 
         // when get
-        String response = mockMvc.perform(get("/userInfo/list")
-                                              .contentType(MediaType.APPLICATION_JSON))
-                                 .andExpect(status().isOk())
-                                 .andExpect(jsonPath("$").isArray())
-                                 .andReturn().getResponse().getContentAsString();
+        String response = mockMvc.perform(get("/userInfo/list").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$").isArray())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
 
-        //        TypeReference<List<UserInfoDTO>> listTypeReference = new TypeReference<List<UserInfoDTO>>(){};
+        // TypeReference<List<UserInfoDTO>> listTypeReference = new
+        // TypeReference<List<UserInfoDTO>>(){};
 
         // then
-        //        List<UserInfoDTO> info = JsonUtils.toList(response, listTypeReference);
+        // List<UserInfoDTO> info = JsonUtils.toList(response, listTypeReference);
         List<UserInfoDTO> info = JsonUtils.toList(response, UserInfoDTO.class);
         assertThat(info.size()).isEqualTo(2);
     }
@@ -196,7 +207,7 @@ class UserControllerTest {
         // valid password
         // modify password with salt
 
-        //        userInfoDTO.setPassword(mypassword.toCharArray());
+        // userInfoDTO.setPassword(mypassword.toCharArray());
 
     }
 
