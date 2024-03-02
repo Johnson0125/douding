@@ -1,8 +1,10 @@
 package com.doubao.douding.system.service.impl;
 
+import com.doubao.douding.system.dto.LoginDTO;
 import com.doubao.douding.system.dto.UserInfoDTO;
 import com.doubao.douding.system.dto.mapper.UserInfoMapper;
 import com.doubao.douding.system.entity.UserInfo;
+import com.doubao.douding.system.entity.query.QUserInfo;
 import com.doubao.douding.system.repository.UserInfoRepository;
 import com.doubao.douding.system.service.UserInfoService;
 import java.util.List;
@@ -62,6 +64,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     public List<UserInfoDTO> list() {
         List<UserInfo> all = UserInfo.FIND.all();
         return userInfoMapper.toDTOList(all);
+    }
+
+    @Override
+    public UserInfo getUserInfo(final LoginDTO loginDTO) {
+        return new QUserInfo().username.equalTo(loginDTO.getUsername()).findOne();
     }
 
 }

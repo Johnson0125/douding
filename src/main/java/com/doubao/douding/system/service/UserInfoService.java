@@ -1,7 +1,9 @@
 package com.doubao.douding.system.service;
 
+import com.doubao.douding.system.dto.LoginDTO;
 import com.doubao.douding.system.dto.UserInfoDTO;
 
+import com.doubao.douding.system.entity.UserInfo;
 import java.util.List;
 
 /**
@@ -39,4 +41,9 @@ public interface UserInfoService {
      */
     List<UserInfoDTO> list();
 
+    /**
+     * @param loginDTO user login info
+     * @return userinfo by loginDTO
+     */
+    UserInfo getUserInfo(LoginDTO loginDTO);
 }
