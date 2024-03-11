@@ -1,13 +1,11 @@
 package com.doubao.douding.system.config;
 
-import com.doubao.douding.system.service.UserInfoService;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import jakarta.annotation.Resource;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,8 +45,8 @@ public class SecurityConfig {
     @Value("${jwt.private.key}")
     RSAPrivateKey privateKey;
 
-//    @Resource
-//    UserInfoService userInfoService;
+    //    @Resource
+    //    UserInfoService userInfoService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -95,6 +93,7 @@ public class SecurityConfig {
 
     /**
      * password encoder
+     *
      * @return password encoder
      */
     @Bean

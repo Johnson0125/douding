@@ -39,9 +39,6 @@ public class UserInfo extends BaseDomain {
     @DbComment("gender")
     private Integer gender;
 
-    @Length(12)
-    private Long salt;
-
     @DbComment("email")
     private String email;
 

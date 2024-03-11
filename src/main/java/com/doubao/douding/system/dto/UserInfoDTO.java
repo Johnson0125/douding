@@ -3,7 +3,6 @@ package com.doubao.douding.system.dto;
 import com.doubao.douding.dto.BaseDTO;
 import com.doubao.douding.dto.validate.Create;
 import com.doubao.douding.dto.validate.Update;
-import io.ebean.annotation.Length;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -42,9 +41,7 @@ public class UserInfoDTO extends BaseDTO {
 
     private Integer role;
 
+    @NotBlank(groups = { Create.class, Update.class })
     private char[] password;
-
-    @Length(12)
-    private Long salt;
 
 }
