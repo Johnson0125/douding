@@ -1,19 +1,16 @@
 package com.doubao.douding.system.controller;
 
+import com.doubao.douding.exception.ServiceException;
 import com.doubao.douding.system.dto.LoginDTO;
 import com.doubao.douding.system.dto.LoginResponseDTO;
-import com.doubao.douding.system.dto.UserInfoDTO;
 import com.doubao.douding.system.entity.UserInfo;
 import com.doubao.douding.system.service.UserInfoService;
 import com.doubao.douding.util.JsonUtils;
-import com.google.common.collect.Maps;
-import com.nimbusds.jwt.JWTClaimsSet;
 import jakarta.annotation.Resource;
 import java.time.Instant;
-import java.util.Map;
-import java.util.function.Consumer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -43,12 +40,18 @@ public class LoginController {
     @Resource
     UserInfoService userInfoService;
 
+    @Resource
+    PasswordEncoder passwordEncoder;
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDTO loginDTO) {
         Instant now = Instant.now();
 
         UserInfo userInfo = userInfoService.getUserInfo(loginDTO);
-        // TODO check user login validate
+        final boolean matches = passwordEncoder.matches(loginDTO.getPassword(), new String(userInfo.getPassword()));
+        if (!matches) {
+            throw new ServiceException("Oops, password not matched!");
+        }
 
         Instant expireAt = now.plusSeconds(expiry);
 

@@ -46,4 +46,11 @@ public interface UserInfoService {
      * @return userinfo by loginDTO
      */
     UserInfo getUserInfo(LoginDTO loginDTO);
+
+    /**
+     * register user
+     * @param userInfoDto register user info
+     * @return user info
+     */
+    UserInfoDTO register(UserInfoDTO userInfoDto);
 }

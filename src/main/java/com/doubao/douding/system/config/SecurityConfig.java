@@ -47,15 +47,15 @@ public class SecurityConfig {
     @Value("${jwt.private.key}")
     RSAPrivateKey privateKey;
 
-    @Resource
-    UserInfoService userInfoService;
+//    @Resource
+//    UserInfoService userInfoService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login","other").permitAll()
+                        .requestMatchers("/login", "other", "userInfo/register").permitAll()
                         .anyRequest().authenticated())
-                    .csrf(csrf -> csrf.ignoringRequestMatchers("/login"))
+                    .csrf(csrf -> csrf.ignoringRequestMatchers("/login", "/userInfo/register"))
                     .httpBasic(Customizer.withDefaults())
                     .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                     .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

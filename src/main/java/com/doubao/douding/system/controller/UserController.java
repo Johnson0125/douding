@@ -34,6 +34,13 @@ public class UserController {
 
     private final UserInfoService userInfoService;
 
+    @Operation(summary = "register user", description = "register")
+    @PostMapping("/register")
+    public ResponseEntity<UserInfoDTO> register(@RequestBody @Validated(Create.class) UserInfoDTO userInfoDto) {
+        userInfoDto = userInfoService.register(userInfoDto);
+        return new ResponseEntity<>(userInfoDto, HttpStatus.CREATED);
+    }
+
     @Operation(summary = "add user", description = "using after login")
     @PostMapping("/add")
     public ResponseEntity<UserInfoDTO> add(@RequestBody @Validated(Create.class) UserInfoDTO userInfoDto) {

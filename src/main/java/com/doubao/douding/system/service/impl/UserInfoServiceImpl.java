@@ -9,6 +9,7 @@ import com.doubao.douding.system.repository.UserInfoRepository;
 import com.doubao.douding.system.service.UserInfoService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,10 +26,13 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     private final UserInfoMapper userInfoMapper;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Transactional
     @Override
     public UserInfoDTO save(UserInfoDTO userInfoDto) {
         UserInfo entity = convertToEntity(userInfoDto);
+        entity.setPassword(passwordEncoder.encode(new String(userInfoDto.getPassword())).toCharArray());
         entity.save();
         return convertToDTO(entity);
     }
@@ -69,6 +73,14 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public UserInfo getUserInfo(final LoginDTO loginDTO) {
         return new QUserInfo().username.equalTo(loginDTO.getUsername()).findOne();
+    }
+
+    @Override
+    public UserInfoDTO register(final UserInfoDTO userInfoDto) {
+        UserInfo entity = convertToEntity(userInfoDto);
+        entity.setPassword(passwordEncoder.encode(new String(userInfoDto.getPassword())).toCharArray());
+        entity.save();
+        return convertToDTO(entity);
     }
 
 }
