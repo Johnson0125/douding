@@ -55,22 +55,22 @@ class UserControllerTest {
     public void setup() {
         userInfoDTOS = Lists.newArrayList();
         userInfoDTO = UserInfoDTO.builder()
-            .email("1@qq.com")
-            .username("username")
-            .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
-            .gender(UserEnum.GenderEnum.FEMALE.getCode())
-            .telephone("18547452131")
-            .build();
+                                 .email("1@qq.com")
+                                 .username("username")
+                                 .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
+                                 .gender(UserEnum.GenderEnum.FEMALE.getCode())
+                                 .telephone("18547452131")
+                                 .build();
         userInfoDTO.setId(1L);
         userInfoDTOS.add(userInfoDTO);
 
         UserInfoDTO userInfoDTO = UserInfoDTO.builder()
-            .email("2@qq.com")
-            .username("anotherName")
-            .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
-            .gender(UserEnum.GenderEnum.MALE.getCode())
-            .telephone("18547452131")
-            .build();
+                                             .email("2@qq.com")
+                                             .username("anotherName")
+                                             .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
+                                             .gender(UserEnum.GenderEnum.MALE.getCode())
+                                             .telephone("18547452131")
+                                             .build();
         userInfoDTO.setId(2L);
         userInfoDTOS.add(userInfoDTO);
 
@@ -82,12 +82,12 @@ class UserControllerTest {
     void givenUserInfo_whenAddUser_thenStatusOk() {
 
         UserInfoDTO resultUser = UserInfoDTO.builder()
-            .email("1@qq.com")
-            .username("username")
-            .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
-            .gender(UserEnum.GenderEnum.FEMALE.getCode())
-            .telephone("18547452131")
-            .build();
+                                            .email("1@qq.com")
+                                            .username("username")
+                                            .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
+                                            .gender(UserEnum.GenderEnum.FEMALE.getCode())
+                                            .telephone("18547452131")
+                                            .build();
         resultUser.setId(1L);
 
         // remember here any instance of UserInfo, to make right
@@ -96,19 +96,18 @@ class UserControllerTest {
         given(userInfoService.save(userInfoDTO)).willReturn(resultUser);
         // when(userInfoService.save(userInfoDTO)).thenReturn(resultUser);
 
-        mockMvc
-            .perform(post("/userInfo/add").contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(JsonUtils.toJsonString(userInfoDTO)))
-            .andExpect(status().isCreated())
-            .andDo(print())
-            .andExpect(jsonPath("$.email").value(resultUser.getEmail()))
-            .andExpect(jsonPath("$.username").value(resultUser.getUsername()))
-            .andExpect(jsonPath("$.telephone").value(resultUser.getTelephone()))
-            .andExpect(jsonPath("$.id").value(resultUser.getId()))
-            .andReturn()
-            .getResponse()
-            .getContentAsString(StandardCharsets.UTF_8);
+        mockMvc.perform(post("/userInfo/add").contentType(MediaType.APPLICATION_JSON)
+                                             .accept(MediaType.APPLICATION_JSON)
+                                             .content(JsonUtils.toJsonString(userInfoDTO)))
+               .andExpect(status().isCreated())
+               .andDo(print())
+               .andExpect(jsonPath("$.email").value(resultUser.getEmail()))
+               .andExpect(jsonPath("$.username").value(resultUser.getUsername()))
+               .andExpect(jsonPath("$.telephone").value(resultUser.getTelephone()))
+               .andExpect(jsonPath("$.id").value(resultUser.getId()))
+               .andReturn()
+               .getResponse()
+               .getContentAsString(StandardCharsets.UTF_8);
     }
 
     // get user
@@ -117,9 +116,7 @@ class UserControllerTest {
     void givenValidId_whenGetUserInfo_thenStatusOk() {
         when(userInfoService.findById(1L)).thenReturn(userInfoDTO);
 
-        mockMvc.perform(get("/userInfo/1")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/userInfo/1").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                .andExpect(jsonPath("$.email").value(userInfoDTO.getEmail()))
@@ -127,7 +124,9 @@ class UserControllerTest {
                .andExpect(jsonPath("$.telephone").value(userInfoDTO.getTelephone()))
                .andExpect(jsonPath("$.id").value(userInfoDTO.getId()))
                .andDo(print())
-               .andReturn().getResponse().getContentAsString();
+               .andReturn()
+               .getResponse()
+               .getContentAsString();
     }
 
     @Test
@@ -152,11 +151,10 @@ class UserControllerTest {
         when(userInfoService.update(userInfoDTO)).thenReturn(userInfoDTO);
 
         // when
-        mockMvc
-            .perform(put("/userInfo/update").contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtils.toJsonString(userInfoDTO)))
-            .andExpect(status().isAccepted())
-            .andExpect(jsonPath("$.email").value(mail));
+        mockMvc.perform(put("/userInfo/update").contentType(MediaType.APPLICATION_JSON)
+                                               .content(JsonUtils.toJsonString(userInfoDTO)))
+               .andExpect(status().isAccepted())
+               .andExpect(jsonPath("$.email").value(mail));
 
         // then
         verify(userInfoService, times(1)).update(userInfoDTO);
@@ -185,11 +183,11 @@ class UserControllerTest {
 
         // when get
         String response = mockMvc.perform(get("/userInfo/list").contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$").isArray())
-            .andReturn()
-            .getResponse()
-            .getContentAsString();
+                                 .andExpect(status().isOk())
+                                 .andExpect(jsonPath("$").isArray())
+                                 .andReturn()
+                                 .getResponse()
+                                 .getContentAsString();
 
         // TypeReference<List<UserInfoDTO>> listTypeReference = new
         // TypeReference<List<UserInfoDTO>>(){};
@@ -202,12 +200,26 @@ class UserControllerTest {
 
     // register user
     @Test
-    void givenValidUser_whenRegister_thenOk() {
-        String passwd = "mypassword";
+    void givenValidUser_whenRegister_thenOk() throws Exception {
+
+        given(userInfoService.register(userInfoDTO)).willReturn(userInfoDTO);
+
+        String response = mockMvc.perform(post("/userInfo/register").contentType(MediaType.APPLICATION_JSON)
+                                                                    .content(JsonUtils.toJsonString(userInfoDTO)))
+                                 .andExpect(status().isCreated())
+                                 .andExpect(jsonPath("$.id").isNotEmpty())
+                                 .andReturn()
+                                 .getResponse()
+                                 .getContentAsString();
+
         // valid password
         // modify password with salt
 
         // userInfoDTO.setPassword(mypassword.toCharArray());
+
+    }
+
+    void givenUnvalidUser_whenRegister_thenNotOk() {
 
     }
 
