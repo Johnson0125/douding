@@ -8,11 +8,13 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 @EqualsAndHashCode(callSuper = true)
@@ -27,21 +29,21 @@ public class UserInfoDTO extends BaseDTO {
     private String username;
 
     @NotNull(groups = { Create.class, Update.class })
-    @Pattern(regexp = "^1+\\d{10}$", message = "telephone should be valid", groups = { Create.class, Update.class })
+    @Pattern(regexp = "^1+\\d{10}$", groups = { Create.class, Update.class }, message = "telephone should be valid")
     private String telephone;
 
-    @Range(min = 0, max = 1, message = "gender is not valid", groups = { Create.class, Update.class })
+    @Range(min = 0, max = 1, groups = { Create.class, Update.class }, message = "gender is not valid")
     private Integer gender;
 
-    @Email(groups = { Create.class, Update.class })
-    @NotBlank(message = "email could not be NULL", groups = { Create.class, Update.class })
+    @Email(groups = { Create.class, Update.class }, message = "email address should be validate")
+    @NotBlank(groups = { Create.class, Update.class }, message = "email could not be NULL")
     private String email;
 
     private Integer userStatus;
 
     private Integer role;
 
-    @NotBlank(groups = { Create.class, Update.class })
+    @Size(groups = {Create.class, Update.class }, min = 8, max = 20, message = "password length should between 8 and 20")
     private char[] password;
 
 }
