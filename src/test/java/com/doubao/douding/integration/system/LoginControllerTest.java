@@ -7,3 +7,4 @@ package com.doubao.douding.integration.system;
  **/
 public class LoginControllerTest {
 }
+
