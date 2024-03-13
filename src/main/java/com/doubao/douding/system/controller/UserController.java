@@ -37,8 +37,8 @@ public class UserController {
     @Operation(summary = "register user", description = "register")
     @PostMapping("/register")
     public ResponseEntity<UserInfoDTO> register(@RequestBody @Validated(Create.class) UserInfoDTO userInfoDto) {
-        userInfoDto = userInfoService.register(userInfoDto);
-        return new ResponseEntity<>(userInfoDto, HttpStatus.CREATED);
+        userInfoService.register(userInfoDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @Operation(summary = "add user", description = "using after login")

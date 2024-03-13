@@ -1,5 +1,6 @@
 package com.doubao.douding.system.controller;
 
+import com.doubao.douding.system.config.SecurityConfig;
 import com.doubao.douding.system.dto.UserInfoDTO;
 import com.doubao.douding.system.enums.UserEnum;
 import com.doubao.douding.system.service.UserInfoService;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -38,6 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 
 @WebMvcTest(UserController.class)
+@ContextConfiguration(classes = SecurityConfig.class)
 @Slf4j
 class UserControllerTest {
 
@@ -53,6 +56,7 @@ class UserControllerTest {
 
     @BeforeEach
     public void setup() {
+
         userInfoDTOS = Lists.newArrayList();
         userInfoDTO = UserInfoDTO.builder()
                                  .email("1@qq.com")
@@ -202,12 +206,12 @@ class UserControllerTest {
     @Test
     void givenValidUser_whenRegister_thenOk() throws Exception {
 
+        userInfoDTO.setPassword(new char[]{'2', '7', 'd', '2', '7', 'd', '2', '7', 'd'});
         given(userInfoService.register(userInfoDTO)).willReturn(userInfoDTO);
 
         String response = mockMvc.perform(post("/userInfo/register").contentType(MediaType.APPLICATION_JSON)
                                                                     .content(JsonUtils.toJsonString(userInfoDTO)))
                                  .andExpect(status().isCreated())
-                                 .andExpect(jsonPath("$.id").isNotEmpty())
                                  .andReturn()
                                  .getResponse()
                                  .getContentAsString();
