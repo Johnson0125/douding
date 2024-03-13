@@ -62,3 +62,11 @@ spring:
       validation-timeout: 1000
       # 保活频率， 30s 最小值
       keepalive-time: 30000
+
+jwt:
+  private.key: classpath:app.private
+  public.key: classpath:app.public
+  # 60s * 60 = 1 hour
+  expiry: 3600
+  # 10 hours
+  refresh.expiry: 36000
