@@ -61,9 +61,9 @@ public class SecurityConfig {
                         .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler()));
 
-        httpSecurity.headers().frameOptions().disable();
-        httpSecurity.csrf().disable();
-        httpSecurity.rememberMe();
+//        httpSecurity.headers().frameOptions().disable();
+//        httpSecurity.csrf().disable();
+//        httpSecurity.rememberMe();
 
         return httpSecurity.build();
     }

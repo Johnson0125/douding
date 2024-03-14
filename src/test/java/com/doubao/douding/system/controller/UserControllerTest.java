@@ -57,7 +57,6 @@ class UserControllerTest {
     @BeforeEach
     public void setup() {
 
-
         userInfoDTOS = Lists.newArrayList();
         userInfoDTO = UserInfoDTO.builder()
                                  .email("1@qq.com")
