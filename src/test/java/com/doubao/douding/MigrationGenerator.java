@@ -14,7 +14,7 @@ public class MigrationGenerator {
 
         DbMigration migration = DbMigration.create();
         migration.setPlatform(Platform.MYSQL);
-        migration.setVersion("20231101.0.0.2");
+        migration.setVersion("20240316.0.0.1");
         migration.setName("base model add operator");
         migration.setStrictMode(false);
 
