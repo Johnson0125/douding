@@ -59,13 +59,13 @@ public class LoginController {
                                           .issuer("self")
                                           .issuedAt(now)
                                           .expiresAt(expireAt)
-                                          .subject("username")
+                                          .subject(userInfo.getUsername())
                                           .claim(JWT_PAYLOAD_USER_KEY, JsonUtils.toJsonString(userInfo))
                                           .build();
         String token = this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
         final Instant refreshExpiresAt = now.plusSeconds(refreshExpiry);
-        claims = JwtClaimsSet.from(claims).expiresAt(refreshExpiresAt).build();
+        claims = JwtClaimsSet.from(claims).subject(token).expiresAt(refreshExpiresAt).build();
         String refreshToken = this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
         LoginResponseDTO loginResponseDTO = LoginResponseDTO.builder()
