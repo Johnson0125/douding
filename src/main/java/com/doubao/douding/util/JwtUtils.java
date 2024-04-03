@@ -1,14 +1,11 @@
 package com.doubao.douding.util;
 
-import com.doubao.douding.exception.ServiceException;
-import com.doubao.douding.system.entity.UserInfo;
 import com.doubao.douding.system.service.UserInfoService;
 import jakarta.annotation.Resource;
 import java.time.Instant;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
