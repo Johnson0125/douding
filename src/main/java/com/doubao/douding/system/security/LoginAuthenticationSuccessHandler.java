@@ -1,4 +1,4 @@
-package com.doubao.douding.system.config;
+package com.doubao.douding.system.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

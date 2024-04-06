@@ -1,6 +1,6 @@
 package com.doubao.douding.system.controller;
 
-import com.doubao.douding.system.config.SecurityConfig;
+import com.doubao.douding.system.security.SecurityConfig;
 import com.doubao.douding.system.dto.UserInfoDTO;
 import com.doubao.douding.system.enums.UserEnum;
 import com.doubao.douding.system.service.UserInfoService;

@@ -1,24 +1,28 @@
-package com.doubao.douding.system.config;
+package com.doubao.douding.system.security;
 
+import com.doubao.douding.system.entity.UserInfo;
+import com.doubao.douding.system.entity.query.QUserInfo;
+import com.doubao.douding.system.filter.JwtAuthenticationFilter;
+import com.doubao.douding.system.handler.DoudingLogoutHandler;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import jakarta.annotation.Resource;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,6 +34,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -49,25 +54,30 @@ public class SecurityConfig {
     @Value("${jwt.private.key}")
     RSAPrivateKey privateKey;
 
-    //    @Resource
-    //    UserInfoService userInfoService;
+    @Resource
+    private DoudingLogoutHandler logoutHandler;
+
+    @Resource
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login", "other", "/userInfo/register").permitAll()
-                        .anyRequest().authenticated())
+        httpSecurity.authorizeHttpRequests(
+                        authorize -> authorize.requestMatchers("/login", "other", "/userInfo/register")
+                                              .permitAll()
+                                              .anyRequest()
+                                              .authenticated())
                     .csrf(AbstractHttpConfigurer::disable)
                     .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                    .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                     .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                    .exceptionHandling(exceptions -> exceptions
-                        .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
-                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler()));
-
-        //        httpSecurity.headers().frameOptions().disable();
-        //        httpSecurity.csrf().disable();
-        //        httpSecurity.rememberMe();
+                    .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                    .exceptionHandling(
+                        exceptions -> exceptions.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+                                                .accessDeniedHandler(new BearerTokenAccessDeniedHandler()))
+                    .logout(l -> l.logoutUrl("/logout")
+                                  .addLogoutHandler(logoutHandler)
+                                  .logoutSuccessHandler(
+                                      (request, response, authentication) -> SecurityContextHolder.clearContext()));
 
         return httpSecurity.build();
     }
@@ -85,16 +95,10 @@ public class SecurityConfig {
 
     @Bean
     UserDetailsService users() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-                // UserInfo userInfo = userInfoService.findByUsername(username);
-                return User.withUsername(username)
-                           .password("sdf")
-                           // roles
-                           .authorities("apps")
-                           .build();
-            }
+        return username -> {
+            Optional<UserInfo> userInfoOptional = new QUserInfo().username.equalTo(username).findOneOrEmpty();
+            return new DoudingUserDetails(
+                userInfoOptional.orElseThrow(() -> new UsernameNotFoundException("User not found.")));
         };
     }
 
