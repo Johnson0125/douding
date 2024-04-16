@@ -30,9 +30,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Resource
-    JwtEncoder encoder;
-
-    @Resource
     JwtDecoder decoder;
 
     @Resource
@@ -60,7 +57,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             final Instant expiresAt = jwt.getExpiresAt();
             final boolean before = jwt.getExpiresAt().isBefore(new Date().toInstant());
-
 
             if (before) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

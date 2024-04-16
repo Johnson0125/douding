@@ -4,6 +4,7 @@ import com.doubao.douding.system.service.UserInfoService;
 import jakarta.annotation.Resource;
 import java.time.Instant;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,14 +21,13 @@ import static com.doubao.douding.system.controller.LoginController.JWT_PAYLOAD_U
  * @description jwt utils for generate token
  */
 @Getter
+@Setter
 @Component
 @ConfigurationProperties(prefix = "jwt")
 public class JwtUtils {
 
-    @Value("${expiry}")
     Long expiry;
 
-    @Value("${refresh.expiry}")
     Long refreshExpiry;
 
     @Resource
@@ -50,11 +50,11 @@ public class JwtUtils {
         Instant expireAt = now.plusSeconds(expiry);
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
-                                          .issuer("self")
+                                          .issuer("douding")
                                           .issuedAt(now)
                                           .expiresAt(expireAt)
                                           .subject(username)
-                                          .claim(JWT_PAYLOAD_USER_KEY, JsonUtils.toJsonString(userInfo))
+                                          .claim(JWT_PAYLOAD_USER_KEY, JsonUtils.toJsonString(username))
                                           .build();
         return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }

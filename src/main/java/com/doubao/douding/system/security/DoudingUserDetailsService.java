@@ -6,12 +6,14 @@ import java.util.Optional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 /**
  * @description: douding user details service
  * @author: Johnson
  * @create: 2024-04-05 18:25
  **/
+@Component
 public class DoudingUserDetailsService implements UserDetailsService {
 
     @Override

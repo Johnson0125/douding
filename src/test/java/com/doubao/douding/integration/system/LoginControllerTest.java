@@ -6,5 +6,9 @@ package com.doubao.douding.integration.system;
  * @Description: login controller integration test
  **/
 public class LoginControllerTest {
+
+    public static void main(String[] args) {
+
+    }
 }
 

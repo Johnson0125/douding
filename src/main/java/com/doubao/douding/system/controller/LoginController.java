@@ -56,7 +56,7 @@ public class LoginController {
         Instant expireAt = now.plusSeconds(expiry);
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
-                                          .issuer("self")
+                                          .issuer("douding")
                                           .issuedAt(now)
                                           .expiresAt(expireAt)
                                           .subject(userInfo.getUsername())
