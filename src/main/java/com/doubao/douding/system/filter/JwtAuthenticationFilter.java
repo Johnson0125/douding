@@ -1,7 +1,6 @@
 package com.doubao.douding.system.filter;
 
 import com.doubao.douding.system.constant.SystemConstant;
-import com.doubao.douding.system.security.DoudingUserDetails;
 import com.doubao.douding.system.security.DoudingUserDetailsService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
@@ -16,7 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -56,7 +54,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             final Instant expiresAt = jwt.getExpiresAt();
-            final boolean before = jwt.getExpiresAt().isBefore(new Date().toInstant());
+            final boolean before = expiresAt.isBefore(new Date().toInstant());
 
             if (before) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

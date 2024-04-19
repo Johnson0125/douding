@@ -1,11 +1,12 @@
 package com.doubao.douding.util;
 
+import com.doubao.douding.system.dto.LoginResponseDTO;
+import com.doubao.douding.system.entity.UserInfo;
 import com.doubao.douding.system.service.UserInfoService;
 import jakarta.annotation.Resource;
 import java.time.Instant;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -41,10 +42,11 @@ public class JwtUtils {
 
     /**
      * generate token
-     * @param username the jwt subject
+     *
+     * @param userInfo the jwt subject
      * @return token
      */
-    public String generateToken(String username) {
+    public String generateToken(UserInfo userInfo) {
         Instant now = Instant.now();
 
         Instant expireAt = now.plusSeconds(expiry);
@@ -53,14 +55,15 @@ public class JwtUtils {
                                           .issuer("douding")
                                           .issuedAt(now)
                                           .expiresAt(expireAt)
-                                          .subject(username)
-                                          .claim(JWT_PAYLOAD_USER_KEY, JsonUtils.toJsonString(username))
+                                          .subject(userInfo.getUsername())
+                                          .claim(JWT_PAYLOAD_USER_KEY, JsonUtils.toJsonString(userInfo))
                                           .build();
         return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 
     /**
      * according to token generate a refreshToken
+     *
      * @param token token
      * @return refreshToken
      */
@@ -72,5 +75,28 @@ public class JwtUtils {
                                           .expiresAt(refreshExpiresAt)
                                           .build();
         return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+    }
+
+    /**
+     *
+     * @param userInfo userInfo
+     * @return LoginResponseDTO
+     */
+    public LoginResponseDTO buildLoginResponse(final UserInfo userInfo) {
+        Instant now = Instant.now();
+        String token = generateToken(userInfo);
+        String refreshToken = generateRefreshToken(token);
+
+        final Instant expireAt = now.plusSeconds(expiry);
+        final Instant refreshExpiresAt = now.plusSeconds(refreshExpiry);
+
+        return LoginResponseDTO.builder()
+                               .token(token)
+                               .expiry(expiry)
+                               .expiredAt(expireAt)
+                               .refreshToken(refreshToken)
+                               .refreshTokenExpiry(refreshExpiry)
+                               .refreshTokenExpiredAt(refreshExpiresAt)
+                               .build();
     }
 }
