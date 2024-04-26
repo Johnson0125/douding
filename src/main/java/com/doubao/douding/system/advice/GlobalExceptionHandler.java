@@ -1,51 +1,54 @@
 package com.doubao.douding.system.advice;
 
 import com.doubao.douding.exception.DataNotFoundException;
+import com.doubao.douding.exception.ServiceException;
 import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * @author Johnson
  * @date
  * @description: common exception handler
  **/
-@ControllerAdvice
+@RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ResponseBody
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 设置状态码为500
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public String postExceptionHandler(MethodArgumentNotValidException e) {
+    public ResponseEntity<String> postExceptionHandler(MethodArgumentNotValidException e) {
         log.error("error occur", e);
         List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
         Optional<ObjectError> objectError = allErrors.stream().findFirst();
-        return objectError.get().getDefaultMessage();
+
+        return new ResponseEntity<>(objectError.get().getDefaultMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ResponseBody
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 设置状态码为500
     @ExceptionHandler(ConstraintViolationException.class)
-    public String paramExceptionHandler(ConstraintViolationException e) {
+    public ResponseEntity<String> paramExceptionHandler(ConstraintViolationException e) {
         log.error("error occur", e);
-        return e.getMessage();
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
+    }
+
+    @ExceptionHandler(DataNotFoundException.class)
+    public ResponseEntity<String> dataNotFoundException(DataNotFoundException e) {
+        log.error("error occur", e);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND) // 设置状态码为500
-    @ExceptionHandler(DataNotFoundException.class)
-    public String dataNotFoundException(ConstraintViolationException e) {
+    @ExceptionHandler(ServiceException.class)
+    public ResponseEntity<String> serviceException(ServiceException e) {
         log.error("error occur", e);
-        return e.getMessage();
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
     }
 
 }

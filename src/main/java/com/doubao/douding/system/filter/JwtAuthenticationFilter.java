@@ -50,9 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String username = jwt.getSubject();
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
             final Instant expiresAt = jwt.getExpiresAt();
             final boolean before = expiresAt.isBefore(new Date().toInstant());
 
@@ -64,7 +62,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authToken.setDetails(
                     new WebAuthenticationDetailsSource().buildDetails(request)
                 );
-
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }

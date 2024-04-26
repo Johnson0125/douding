@@ -55,6 +55,6 @@ jwt:
   # 60s * 60 = 1 hour
   expiry: 3600
   # 10 hours
-  refresh.expiry: 36000
+  refreshExpiry: 36000
 
  # 39.100.182.241
