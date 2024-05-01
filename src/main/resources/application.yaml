@@ -29,7 +29,7 @@ ebean:
 #  mappingLocations: classpath:/ebean-xml-mappings
 spring:
   jackson:
-    time-zone: GMT+8
+    time-zone: Asia/Shanghai
     date-format: yyyy-MM-dd HH:mm:ss
   api-docs:
     enabled: true

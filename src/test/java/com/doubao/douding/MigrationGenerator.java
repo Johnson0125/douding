@@ -5,7 +5,7 @@ import io.ebean.dbmigration.DbMigration;
 import java.io.IOException;
 
 /**
- * @author zhangs890
+ * @author Johnson
  * @Description generate db migration according to Domain
  */
 public class MigrationGenerator {

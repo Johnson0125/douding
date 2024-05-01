@@ -56,11 +56,6 @@
 			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 		</dependency>
 
-		<!--<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-jsr310</artifactId>
-		</dependency>-->
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
@@ -224,8 +219,6 @@
 		</dependency>
 		<!-- end  fix jdk17 could not run ebean migration -->
 	</dependencies>
-
-
 
 	<build>
 		<resources>
