@@ -1,6 +1,5 @@
 package com.doubao.douding.system.config;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -35,14 +34,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class JacksonConfig {
 
-    static final String datePattern = "yyyy-MM-dd";
-    static final String dateTimePattern = "yyyy-MM-dd HH:mm:ss";
-    static final String SHANGHAI = "Asia/Shanghai";
+    static final String DATE_PATTERN = "yyyy-MM-dd";
+    static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    static final String TIMEZONE_SHANGHAI = "Asia/Shanghai";
 
     @Bean
     public ObjectMapper serializingObjectMapper() {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(datePattern);
-       DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateTimePattern);
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
+       DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
 
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
@@ -64,7 +63,7 @@ public class JacksonConfig {
         @Serial
         private static final long serialVersionUID = 1L;
 
-        private static final DateTimeFormatter format = DateTimeFormatter.ofPattern(dateTimePattern);
+        private static final DateTimeFormatter format = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
 
         public CustomInstantDateSerializer() {
             this(null);
@@ -101,10 +100,10 @@ public class JacksonConfig {
         @Override
         public Instant deserialize(final JsonParser p,
                                    final DeserializationContext ctxt) throws IOException {
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateTimePattern, Locale.CHINA);
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN, Locale.CHINA);
             LocalDateTime localDateTime = LocalDateTime.parse(p.getText(), dateTimeFormatter);
 
-            ZoneId zoneId = ZoneId.of(SHANGHAI);
+            ZoneId zoneId = ZoneId.of(TIMEZONE_SHANGHAI);
             ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
             return zonedDateTime.toInstant();
         }
