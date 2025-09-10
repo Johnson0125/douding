@@ -14,9 +14,11 @@ public class MigrationGenerator {
 
         DbMigration migration = DbMigration.create();
         migration.setPlatform(Platform.MYSQL);
-        migration.setVersion("20240316.0.0.1");
+        migration.setVersion("20240316.0.0.3");
         migration.setName("base model add operator");
         migration.setStrictMode(false);
+        migration.setGeneratePendingDrop(null);
+        
 
         migration.generateMigration();
     }

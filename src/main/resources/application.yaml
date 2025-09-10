@@ -28,6 +28,8 @@ ebean:
       txnCommit: none
 #  mappingLocations: classpath:/ebean-xml-mappings
 spring:
+  profiles:
+    active: zs
   jackson:
     time-zone: Asia/Shanghai
     date-format: yyyy-MM-dd HH:mm:ss
@@ -58,3 +60,9 @@ jwt:
   refreshExpiry: 36000
 
  # 39.100.182.241
+
+ # swagger-ui custom path
+springdoc:
+  swagger-ui:
+    path:
+      swagger-ui.html

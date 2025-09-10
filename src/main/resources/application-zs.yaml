@@ -1,9 +1,11 @@
+douding:
+  jdbc: jdbc:mysql://39.100.182.241:3306
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     username: ${douding.user}
     password: ${douding.password}
-    url: ${douding.url}
+    url: ${douding.jdbc}/douding?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8&allowPublicKeyRetrieval=true
     hikari:
       # 最大连接数，小于等于0会被重置为默认值10；大于零小于1会被重置为minimum-idle的值
       maximum-pool-size: 10
@@ -11,7 +13,7 @@ spring:
       # 官方不推荐设置，默认和maximum一致
       # minimum-idle: 10
       # 连接超时时间：毫秒，小于250毫秒，否则被重置为默认值30秒
-      connection-timeout: 2000
+      connection-timeout: 30000
       pool-name: ebean-hikari
       # 空闲连接超时时间，默认值600000（10分钟），大于等于max-lifetime且max-lifetime>0，
       # 会被重置为0；不等于0且小于10秒，会被重置为10秒。

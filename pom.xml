@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.5</version>
+		<version>3.5.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.doubao</groupId>
@@ -16,16 +16,22 @@
 
 	<properties>
 		<java.version>21</java.version>
-		<ebean.version>13.25.0</ebean.version>
-		<ebean.migration.version>13.11.1</ebean.migration.version>
+		<ebean.version>17.0.1</ebean.version>
+		<ebean.migration.version>14.3.0</ebean.migration.version>
 		<ebean.mocker.version>13.7.0</ebean.mocker.version>
-		<ebean-spring-txn.version>13.25.2</ebean-spring-txn.version>
+		<ebean-spring-txn.version>17.0.1</ebean-spring-txn.version>
 		<springboot.version>3.2.1</springboot.version>
 		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
 		<guava.version>33.0.0-jre</guava.version>
 	</properties>
 
 	<dependencies>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+            <scope>compile</scope>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -116,12 +122,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>io.avaje</groupId>
-			<artifactId>avaje-applog</artifactId>
-			<version>1.0</version>
-		</dependency>
-
-		<dependency>
 			<groupId>io.ebean</groupId>
 			<artifactId>ebean-migration</artifactId>
 			<version>${ebean.migration.version}</version>
@@ -130,26 +130,20 @@
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
-			<version>8.2.0</version>
+			<scope>runtime</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.3.0</version>
-		</dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.8.13</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
-			<version>2.3.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>2.3.1</version>
-		</dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+            <version>2.8.13</version>
+        </dependency>
 
 		<!--test start-->
 
@@ -198,28 +192,30 @@
 			<version>${org.mapstruct.version}</version>
 		</dependency>
 
-		<!--fix jdk17 could not run ebean migration-->
-		<!-- API, java.xml.bind module https://zhuanlan.zhihu.com/p/666718503 -->
-		<dependency>
-			<groupId>jakarta.xml.bind</groupId>
-			<artifactId>jakarta.xml.bind-api</artifactId>
-			<version>3.0.1</version>
-		</dependency>
-
-		<!-- Runtime, com.sun.xml.bind module -->
-		<dependency>
-			<groupId>org.glassfish.jaxb</groupId>
-			<artifactId>jaxb-runtime</artifactId>
-			<version>2.3.2</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.activation</groupId>
-			<artifactId>activation</artifactId>
-			<version>1.1.1</version>
-		</dependency>
-		<!-- end  fix jdk17 could not run ebean migration -->
 	</dependencies>
 
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://maven.aliyun.com/repository/central</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>tencent</id>
+            <url>http://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 	<build>
 		<resources>
 			<resource>
@@ -299,7 +295,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.10.1</version>
 				<configuration>
 					<source>21</source>
 					<target>21</target>

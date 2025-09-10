@@ -4,8 +4,8 @@ import com.doubao.douding.entity.BaseDomain;
 import io.ebean.annotation.DbComment;
 import io.ebean.annotation.Length;
 import io.ebean.annotation.NotNull;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,4 +39,8 @@ public class SysResource extends BaseDomain {
     @Length(1)
     @DbComment("url status")
     private Integer urlStatus;
+
+    @Length(200)
+    @DbComment("remark")
+    private String remark;
 }
