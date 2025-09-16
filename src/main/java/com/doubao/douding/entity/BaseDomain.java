@@ -2,6 +2,7 @@ package com.doubao.douding.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.ebean.Model;
+import io.ebean.annotation.SoftDelete;
 import io.ebean.annotation.WhenCreated;
 import io.ebean.annotation.WhenModified;
 import io.ebean.annotation.WhoCreated;
@@ -45,5 +46,8 @@ public abstract class BaseDomain extends Model {
 
     @WhoModified
     String whoModified;
+
+    @SoftDelete
+    boolean deleted;
 
 }

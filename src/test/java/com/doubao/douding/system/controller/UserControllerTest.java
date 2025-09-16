@@ -214,7 +214,8 @@ class UserControllerTest {
     @Test
     void givenValidUser_whenRegister_thenOk() throws Exception {
 
-        userInfoDTO.setPassword(new char[]{'2', '7', 'd', '2', '7', 'd', '2', '7', 'd'});
+//        userInfoDTO.setPassword(new char[]{'2', '7', 'd', '2', '7', 'd', '2', '7', 'd'});
+        userInfoDTO.setPassword("123456785");
         given(userInfoService.register(userInfoDTO)).willReturn(userInfoDTO);
 
         String response = mockMvc.perform(post("/userInfo/register").contentType(MediaType.APPLICATION_JSON)

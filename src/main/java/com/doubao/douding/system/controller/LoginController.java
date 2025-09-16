@@ -5,7 +5,7 @@ import com.doubao.douding.system.dto.LoginDTO;
 import com.doubao.douding.system.dto.LoginResponseDTO;
 import com.doubao.douding.system.entity.UserInfo;
 import com.doubao.douding.system.service.UserInfoService;
-import com.doubao.douding.util.JwtUtils;
+import com.doubao.douding.system.security.JwtUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;

@@ -1,10 +1,11 @@
-package com.doubao.douding.util;
+package com.doubao.douding.system.security;
 
 import com.doubao.douding.exception.ServiceException;
 import com.doubao.douding.system.dto.LoginDTO;
 import com.doubao.douding.system.dto.LoginResponseDTO;
 import com.doubao.douding.system.entity.UserInfo;
 import com.doubao.douding.system.service.UserInfoService;
+import com.doubao.douding.util.JsonUtils;
 import jakarta.annotation.Resource;
 import java.time.Instant;
 import lombok.Getter;
@@ -87,6 +88,7 @@ public class JwtUtils {
 
     /**
      * @param userInfo userInfo
+     * @param refreshToken refreshToken, can be null
      * @return LoginResponseDTO
      */
     public LoginResponseDTO buildLoginResponse(final UserInfo userInfo, String refreshToken) {

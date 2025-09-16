@@ -4,20 +4,18 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.stereotype.Component;
 
 /**
  * @author Johnson
  * @date 2024-03-18
  * @description handler after authentication success
  */
-@Component
-@Slf4j
+//@Component
+//@Slf4j
 public class LoginAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     /**

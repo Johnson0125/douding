@@ -64,6 +64,8 @@ public class UserInfoDTO extends BaseDTO {
         Create.class,
         Update.class
     }, min = 8, max = 20, message = "password length should between 8 and 20")
-    private char[] password;
+    private String password;
+
+    private boolean deleted;
 
 }

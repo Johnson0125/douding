@@ -5,14 +5,13 @@ import com.doubao.douding.system.entity.query.QUserInfo;
 import com.doubao.douding.system.enums.UserEnum;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertNotNull;
 
 @SpringBootTest
-@Transactional
+//@Transactional
 class UserInfoRepositoryTest {
 
     @Test

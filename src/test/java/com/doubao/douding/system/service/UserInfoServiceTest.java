@@ -16,6 +16,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.anyLong;
@@ -47,6 +49,9 @@ class UserInfoServiceTest {
     @Mock
     private UserInfoFinder finder;
 
+    @MockitoBean
+    private PasswordEncoder passwordEncoder;
+
     @BeforeEach
     void setUp() {
         userInfo = UserInfo.builder()
@@ -55,6 +60,7 @@ class UserInfoServiceTest {
             .userStatus(UserEnum.UserStatusEnum.NORMAL.getCode())
             .gender(UserEnum.GenderEnum.FEMALE.getCode())
             .telephone("1854745213")
+//            .password(new char[]{'1','2', '1','2'})
             .build();
         userInfo.setId(1L);
 
