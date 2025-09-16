@@ -5,16 +5,23 @@ import com.doubao.douding.dto.validate.Update;
 import com.doubao.douding.system.dto.UserInfoDTO;
 import com.doubao.douding.system.enums.UserEnum;
 import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
 import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
+import static jakarta.validation.Validation.buildDefaultValidatorFactory;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserInfoRequestTests {
 
-    private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+    private final Validator validator;
+
+    public UserInfoRequestTests() {
+        try(final ValidatorFactory validatorFactory = buildDefaultValidatorFactory()){
+            this.validator = validatorFactory.getValidator();
+        }
+    }
 
     @Test
     void validateFieldsForCreate() {

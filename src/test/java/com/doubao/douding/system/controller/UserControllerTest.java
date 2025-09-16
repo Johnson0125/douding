@@ -1,8 +1,9 @@
 package com.doubao.douding.system.controller;
 
-import com.doubao.douding.system.security.SecurityConfig;
 import com.doubao.douding.system.dto.UserInfoDTO;
 import com.doubao.douding.system.enums.UserEnum;
+import com.doubao.douding.system.security.DoudingUserDetailsService;
+import com.doubao.douding.system.security.SecurityConfig;
 import com.doubao.douding.system.service.UserInfoService;
 import com.doubao.douding.util.JsonUtils;
 import com.google.common.collect.Lists;
@@ -14,9 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -47,8 +49,14 @@ class UserControllerTest {
     @Resource
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private UserInfoService userInfoService;
+
+    @MockitoBean
+    private JwtDecoder jwtDecoder;
+
+    @MockitoBean
+    private DoudingUserDetailsService doudingUserDetailsService;
 
     private UserInfoDTO userInfoDTO;
 
