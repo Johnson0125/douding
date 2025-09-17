@@ -18,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -91,6 +92,7 @@ class UserControllerTest {
     // add user
     @Test
     @SneakyThrows
+    @WithMockUser(roles = "ADMIN")
     void givenUserInfo_whenAddUser_thenStatusOk() {
 
         UserInfoDTO resultUser = UserInfoDTO.builder()
