@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <addColumn tableName="sys_resource">
+            <column name="deleted" type="boolean" defaultValue="false" notnull="true"/>
+        </addColumn>
+        <addColumn tableName="sys_role">
+            <column name="deleted" type="boolean" defaultValue="false" notnull="true"/>
+        </addColumn>
+        <addColumn tableName="sys_role_resource">
+            <column name="deleted" type="boolean" defaultValue="false" notnull="true"/>
+        </addColumn>
+        <addColumn tableName="sys_user_role">
+            <column name="deleted" type="boolean" defaultValue="false" notnull="true"/>
+        </addColumn>
+        <addColumn tableName="user_info">
+            <column name="deleted" type="boolean" defaultValue="false" notnull="true"/>
+        </addColumn>
+    </changeSet>
+</migration>

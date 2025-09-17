@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <addColumn tableName="sys_resource">
+            <column name="record_modification_version" type="bigint" notnull="true"/>
+        </addColumn>
+        <addColumn tableName="sys_role">
+            <column name="record_modification_version" type="bigint" notnull="true"/>
+        </addColumn>
+        <addColumn tableName="sys_role_resource">
+            <column name="record_modification_version" type="bigint" notnull="true"/>
+        </addColumn>
+        <addColumn tableName="sys_user_role">
+            <column name="record_modification_version" type="bigint" notnull="true"/>
+        </addColumn>
+        <addColumn tableName="user_info">
+            <column name="record_modification_version" type="bigint" notnull="true"/>
+        </addColumn>
+    </changeSet>
+    <changeSet type="pendingDrops">
+        <dropColumn columnName="version" tableName="sys_resource"/>
+        <dropColumn columnName="version" tableName="sys_role"/>
+        <dropColumn columnName="version" tableName="sys_role_resource"/>
+        <dropColumn columnName="version" tableName="sys_user_role"/>
+        <dropColumn columnName="version" tableName="user_info"/>
+    </changeSet>
+</migration>

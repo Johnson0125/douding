@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <addColumn tableName="sys_resource">
+            <column name="remark" type="varchar(200)" comment="remark"/>
+        </addColumn>
+    </changeSet>
+</migration>
