@@ -8,6 +8,7 @@ import com.doubao.douding.system.service.UserInfoService;
 import com.doubao.douding.util.JsonUtils;
 import jakarta.annotation.Resource;
 import java.time.Instant;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
@@ -59,6 +60,22 @@ public class JwtUtils {
         Instant now = Instant.now();
 
         Instant expireAt = now.plusSeconds(expiry);
+
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+                                          .issuer("douding")
+                                          .issuedAt(now)
+                                          .expiresAt(expireAt)
+                                          .subject(userInfo.getUsername())
+                                          .claim(JWT_PAYLOAD_USER_KEY, JsonUtils.toJsonString(userInfo))
+                                          .build();
+        return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+    }
+
+    public String generateToken(UserInfo userInfo, List<String> roles) {
+        Instant now = Instant.now();
+
+        Instant expireAt = now.plusSeconds(expiry);
+
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
                                           .issuer("douding")

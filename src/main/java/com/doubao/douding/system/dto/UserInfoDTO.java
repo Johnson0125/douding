@@ -3,12 +3,14 @@ package com.doubao.douding.system.dto;
 import com.doubao.douding.dto.BaseDTO;
 import com.doubao.douding.dto.validate.Create;
 import com.doubao.douding.dto.validate.Update;
+import com.doubao.douding.system.entity.SysUserRole;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -58,7 +60,7 @@ public class UserInfoDTO extends BaseDTO {
 
     private Integer userStatus;
 
-    private Integer role;
+    private List<SysUserRole> roles;
 
     @Size(groups = {
         Create.class,

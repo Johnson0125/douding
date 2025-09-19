@@ -11,6 +11,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,7 @@ public class UserController {
 
     @Operation(summary = "add user", description = "using after login")
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserInfoDTO> add(@RequestBody @Validated(Create.class) UserInfoDTO userInfoDto) {
         userInfoDto = userInfoService.save(userInfoDto);
         return new ResponseEntity<>(userInfoDto, HttpStatus.CREATED);

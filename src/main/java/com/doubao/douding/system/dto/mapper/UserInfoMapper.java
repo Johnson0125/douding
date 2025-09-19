@@ -19,6 +19,7 @@ public interface UserInfoMapper {
     @Mapping(source = "password", target = "password", qualifiedByName = "charArrayToString")
     UserInfoDTO toDTO(UserInfo userInfo);
 
+    @Mapping(target = "recordModificationVersion", ignore = true)
     @Mapping(source = "password", target = "password", qualifiedByName = "stringToCharArray")
     UserInfo toEntity(UserInfoDTO userInfoDto);
 

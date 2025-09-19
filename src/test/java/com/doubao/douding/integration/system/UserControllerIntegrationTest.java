@@ -1,22 +1,28 @@
 package com.doubao.douding.integration.system;
 
 import com.doubao.douding.system.dto.UserInfoDTO;
+import com.doubao.douding.system.dto.mapper.UserInfoMapper;
 import com.doubao.douding.system.enums.UserEnum;
+import com.doubao.douding.system.security.JwtUtils;
+import com.doubao.douding.util.JsonUtils;
 import jakarta.annotation.Resource;
+import java.nio.charset.StandardCharsets;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @Author Johnson
@@ -29,12 +35,20 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Transactional
 class UserControllerIntegrationTest {
 
+    @Autowired
+    private MockMvc mockMvc;
+
     @Resource
-    private TestRestTemplate restTemplate;
+    private JwtUtils jwtUtils;
+
+    @Resource
+    private UserInfoMapper userInfoMapper;
 
     @Test
     @SneakyThrows
+    @WithMockUser(roles = {"ADMIN"})
     void givenUserInfo_whenAddUser_thenStatusOk() {
+
         UserInfoDTO userInfoDTO = UserInfoDTO.builder()
             .email("1@qq.com")
             .username("username")
@@ -43,17 +57,20 @@ class UserControllerIntegrationTest {
             .telephone("18547452135")
             .build();
 
-        ResponseEntity<UserInfoDTO> response = restTemplate.exchange("/userInfo/add", HttpMethod.POST,
-                new HttpEntity<UserInfoDTO>(userInfoDTO), UserInfoDTO.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(response.getBody()).isNotNull();
-        UserInfoDTO data = response.getBody();
-        assert data != null;
-        assertThat(data).isNotNull();
-        assertThat(data.getId()).isNotNull();
-        assertThat(data.getEmail()).isEqualTo("1@qq.com");
-        assertThat(data.getUsername()).isEqualTo("username");
-        assertThat(data.getGender()).isEqualTo(UserEnum.GenderEnum.FEMALE.getCode());
+        mockMvc.perform(post("/userInfo/add").contentType(MediaType.APPLICATION_JSON)
+                                             .accept(MediaType.APPLICATION_JSON)
+                                             .content(JsonUtils.toJsonString(userInfoDTO)))
+               .andExpect(status().isCreated())
+               .andDo(print())
+               .andExpect(jsonPath("$.email").value(userInfoDTO.getEmail()))
+               .andExpect(jsonPath("$.username").value(userInfoDTO.getUsername()))
+               .andExpect(jsonPath("$.telephone").value(userInfoDTO.getTelephone()))
+               .andExpect(jsonPath("$.id").exists())
+               .andReturn()
+               .getResponse()
+               .getContentAsString(StandardCharsets.UTF_8);
+
+
     }
 
 }

@@ -19,6 +19,7 @@ public class DoudingUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         Optional<UserInfo> userInfoOptional = new QUserInfo().username.equalTo(username).findOneOrEmpty();
+
         return new DoudingUserDetails(
             userInfoOptional.orElseThrow(() -> new UsernameNotFoundException("User not found.")));
     }

@@ -2,6 +2,7 @@ package com.doubao.douding.system.controller;
 
 import com.doubao.douding.system.dto.UserInfoDTO;
 import com.doubao.douding.system.enums.UserEnum;
+import com.doubao.douding.system.handler.DoudingLogoutHandler;
 import com.doubao.douding.system.security.DoudingUserDetailsService;
 import com.doubao.douding.system.security.SecurityConfig;
 import com.doubao.douding.system.service.UserInfoService;
@@ -55,6 +56,9 @@ class UserControllerTest {
 
     @MockitoBean
     private JwtDecoder jwtDecoder;
+
+    @MockitoBean
+    private DoudingLogoutHandler doudingLogoutHandler;
 
     @MockitoBean
     private DoudingUserDetailsService doudingUserDetailsService;

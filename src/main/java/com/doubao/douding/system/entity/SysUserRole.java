@@ -5,6 +5,7 @@ import io.ebean.annotation.DbComment;
 import io.ebean.annotation.Length;
 import io.ebean.annotation.NotNull;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,10 +29,12 @@ public class SysUserRole extends BaseDomain {
     @NotNull
     @Length(19)
     @DbComment("user id")
-    private Long userId;
+    @ManyToOne
+    private UserInfo user;
 
     @NotNull
     @Length(19)
     @DbComment("role id")
-    private Long roleId;
+    @ManyToOne
+    private SysRole role;
 }

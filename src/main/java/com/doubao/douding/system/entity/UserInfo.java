@@ -6,7 +6,9 @@ import io.ebean.annotation.DbComment;
 import io.ebean.annotation.Length;
 import io.ebean.annotation.NotNull;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,8 +47,9 @@ public class UserInfo extends BaseDomain {
     @DbComment("user''s status info")
     private Integer userStatus;
 
-    @DbComment("role of user")
-    private Integer role;
+    @DbComment("roles of user")
+    @OneToMany(mappedBy = "user")
+    private List<SysUserRole> roles;
 
     private char[] password;
 

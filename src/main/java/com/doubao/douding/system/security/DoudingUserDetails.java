@@ -13,17 +13,11 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author: Johnson
  * @create: 2024-04-05 16:53
  **/
-public class DoudingUserDetails implements UserDetails {
-
-    public DoudingUserDetails(final UserInfo userInfo) {
-        this.userInfo = userInfo;
-    }
-
-    private final UserInfo userInfo;
+public record DoudingUserDetails(UserInfo userInfo) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("admin"));
+        return List.of(new SimpleGrantedAuthority("ADMIN"));
     }
 
     @Override
