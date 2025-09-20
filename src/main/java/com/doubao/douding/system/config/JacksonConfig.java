@@ -63,7 +63,7 @@ public class JacksonConfig {
         @Serial
         private static final long serialVersionUID = 1L;
 
-        private static final DateTimeFormatter format = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
+        private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
 
         public CustomInstantDateSerializer() {
             this(null);
@@ -79,7 +79,7 @@ public class JacksonConfig {
             if (instant == null) {
                 return;
             }
-            String jsonValue = format.format(instant.atZone(ZoneId.systemDefault()));
+            String jsonValue = FORMAT.format(instant.atZone(ZoneId.systemDefault()));
             jsonGenerator.writeString(jsonValue);
         }
     }

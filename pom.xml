@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.5</version>
+		<version>3.5.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.doubao</groupId>
@@ -15,14 +15,14 @@
 	<description>Project with Base Function</description>
 
 	<properties>
-		<java.version>21</java.version>
+		<java.version>25</java.version>
 		<ebean.version>17.0.1</ebean.version>
 		<ebean.migration.version>14.3.0</ebean.migration.version>
 		<ebean.mocker.version>13.7.0</ebean.mocker.version>
 		<ebean-spring-txn.version>17.0.1</ebean-spring-txn.version>
 		<springboot.version>3.2.1</springboot.version>
 		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
-		<guava.version>33.0.0-jre</guava.version>
+		<guava.version>33.5.0-jre</guava.version>
 	</properties>
 
 	<dependencies>
@@ -322,7 +322,7 @@
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
-							<version>1.18.38</version>
+							<!--<version>1.18.38</version>-->
 						</path>
 						<path>
 							<groupId>org.projectlombok</groupId>

@@ -76,7 +76,6 @@ public class JwtUtils {
 
         Instant expireAt = now.plusSeconds(expiry);
 
-
         JwtClaimsSet claims = JwtClaimsSet.builder()
                                           .issuer("douding")
                                           .issuedAt(now)
@@ -104,7 +103,7 @@ public class JwtUtils {
     }
 
     /**
-     * @param userInfo userInfo
+     * @param userInfo     userInfo
      * @param refreshToken refreshToken, can be null
      * @return LoginResponseDTO
      */
