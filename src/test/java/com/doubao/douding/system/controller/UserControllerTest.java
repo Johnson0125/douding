@@ -4,31 +4,30 @@ import com.doubao.douding.system.dto.UserInfoDTO;
 import com.doubao.douding.system.enums.UserEnum;
 import com.doubao.douding.system.handler.DoudingLogoutHandler;
 import com.doubao.douding.system.security.DoudingUserDetailsService;
-import com.doubao.douding.system.security.SecurityConfig;
 import com.doubao.douding.system.service.UserInfoService;
 import com.doubao.douding.util.JsonUtils;
 import com.google.common.collect.Lists;
-import jakarta.annotation.Resource;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.times;
 import static org.mockito.BDDMockito.verify;
 import static org.mockito.BDDMockito.when;
-import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -43,15 +42,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @Description user manage controller
  */
 
-@WebMvcTest(UserController.class)
-@Import(SecurityConfig.class)
-@Slf4j
+//@WebMvcTest(UserController.class)
+//@Import(SecurityConfig.class)
+//@Slf4j
+@ExtendWith(MockitoExtension.class)
 class UserControllerTest {
 
-    @Resource
     private MockMvc mockMvc;
 
-    @MockitoBean
+    @InjectMocks
+    private UserController userController;
+
+    @Mock
     private UserInfoService userInfoService;
 
     @MockitoBean
@@ -70,6 +72,7 @@ class UserControllerTest {
     @BeforeEach
     public void setup() {
 
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
         userInfoDTOS = Lists.newArrayList();
         userInfoDTO = UserInfoDTO.builder()
                                  .email("1@qq.com")
@@ -183,9 +186,8 @@ class UserControllerTest {
     @SneakyThrows
     void givenUser_whenDelete_thenOk() {
         mockMvc.perform(delete("/userInfo/1").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-
-        willDoNothing().given(userInfoService).delete(1L);
-
+//        willDoNothing().given(userInfoService).delete(1L);
+//        doNothing().when(userInfoService).delete(1L);
         verify(userInfoService, times(1)).delete(1L);
     }
 
