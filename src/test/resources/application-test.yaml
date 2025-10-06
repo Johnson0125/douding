@@ -1,0 +1,80 @@
+douding:
+  host: ${mysql.url}
+server:
+  port: 8080
+  servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+  undertow:
+    threads:
+      io: 16
+      worker: 120
+    buffer-size: 2048
+    direct-buffers: true
+
+ebean:
+#   ddl:
+#     generate: true
+#     run: true
+  test:
+    useDocker: false  # DO NOT USE DOCKER
+    platform: mysql # h2, postgres, mysql, oracle, sqlserver
+    ddlMode: migrations # none | dropCreate | migrations | create
+    dbName: douding_test
+    mysql:
+      username: ${douding.user}
+      password: ${douding.password}
+      url: ${spring.datasource.url}
+
+spring:
+  main:
+    lazy-initialization: true
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  api-docs:
+    enabled: true
+  swagger-ui:
+    persistAuthorization: true
+
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: ${douding.user}
+    password: ${douding.password}
+    url: jdbc:mysql://${douding.host}/douding_test?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8&allowPublicKeyRetrieval=true
+    hikari:
+      # 最大连接数，小于等于0会被重置为默认值10；大于零小于1会被重置为minimum-idle的值
+      maximum-pool-size: 10
+      # 最小空闲连接，默认值10，小于0或大于maximum-pool-size，都会重置为maximum-pool-size
+      # 官方不推荐设置，默认和maximum一致
+      # minimum-idle: 10
+      # 连接超时时间：毫秒，小于250毫秒，否则被重置为默认值30秒
+      connection-timeout: 2000
+      pool-name: ebean-hikari-test
+      # 空闲连接超时时间，默认值600000（10分钟），大于等于max-lifetime且max-lifetime>0，
+      # 会被重置为0；不等于0且小于10秒，会被重置为10秒。
+      # This setting only applies when minimumIdle is defined to be less than maximumPoolSize
+      # idle-timeout: 600000
+      auto-commit: true
+      # 连接最大存活时间.不等于0且小于30秒，会被重置为默认值30分钟.设置应该比mysql设置的超时时间短
+      max-lifetime: 1800000
+      # 用于测试连接是否可用的查询语句
+      #      connection-test-query: SELECT 1
+      validation-timeout: 1000
+      # 保活频率， 30s 最小值
+      keepalive-time: 30000
+
+jwt:
+  private.key: classpath:app.private
+  public.key: classpath:app.public
+  # 60s * 60 = 1 hour
+  expiry: 3600
+  # 10 hours
+  refresh.expiry: 36000
+
+logging:
+ level:
+  io.ebean.migration: DEBUG  # 打印迁移详细日志
+  io.ebean: INFO
