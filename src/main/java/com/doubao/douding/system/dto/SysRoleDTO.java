@@ -3,7 +3,6 @@ package com.doubao.douding.system.dto;
 import com.doubao.douding.common.dto.BaseDTO;
 import com.doubao.douding.common.dto.validate.Create;
 import com.doubao.douding.common.dto.validate.Update;
-import io.ebean.annotation.Length;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -40,7 +39,6 @@ public class SysRoleDTO extends BaseDTO {
     @Schema(title = "role status")
     private Integer roleStatus;
 
-    @Length(100)
     @Schema(title = "remark")
     @Size(groups = {
         Create.class,

@@ -51,7 +51,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-
     @ResponseBody
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<String> serviceException(ServiceException e) {

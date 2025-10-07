@@ -1,6 +1,8 @@
 package com.doubao.douding.system.entity;
 
 import com.doubao.douding.common.entity.BaseDomain;
+import com.doubao.douding.system.entity.finder.SysResourceFinder;
+import com.doubao.douding.system.entity.finder.SysRoleFinder;
 import io.ebean.annotation.DbComment;
 import io.ebean.annotation.Length;
 import io.ebean.annotation.NotNull;
@@ -27,7 +29,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SysResource extends BaseDomain {
 
-    @NotNull
+    public static final SysResourceFinder FIND = new SysResourceFinder(SysResource.class);
+
     @DbComment("parent id")
     @ManyToOne
     private SysResource parent;
@@ -50,7 +53,7 @@ public class SysResource extends BaseDomain {
     @NotNull
     @Length(1)
     @DbComment("resource status, 1:normal,0:disabled")
-    private Integer urlStatus;
+    private Integer resourceStatus;
 
     @Length(100)
     @DbComment("permission")

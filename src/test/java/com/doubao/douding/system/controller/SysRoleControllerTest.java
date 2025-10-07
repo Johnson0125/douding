@@ -216,7 +216,6 @@ class SysRoleControllerTest extends BaseControllerTest {
         @SneakyThrows
         public void delete_withNonExistingId_shouldReturnNotFound() {
             deleteAction(mockMvc, "/sysRole/999").andExpect(status().isOk());
-
         }
 
         @Test

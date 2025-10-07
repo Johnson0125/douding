@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
     <changeSet type="apply">
-        <alterColumn columnName="url_status" tableName="sys_resource" comment="resource status, 1:normal,0:disabled"/>
         <addColumn tableName="sys_resource">
-            <column name="parent_id" type="bigint" notnull="true" references="sys_resource.id" foreignKeyName="fk_sys_resource_parent_id" foreignKeyIndex="ix_sys_resource_parent_id" comment="parent id"/>
+            <column name="parent_id" type="bigint" references="sys_resource.id" foreignKeyName="fk_sys_resource_parent_id" foreignKeyIndex="ix_sys_resource_parent_id" comment="parent id"/>
             <column name="resource_type" type="integer(20)" notnull="true" comment="resource type, 1:dir,2:menu,3:button"/>
+            <column name="resource_status" type="integer(1)" notnull="true" comment="resource status, 1:normal,0:disabled"/>
             <column name="permission" type="varchar(100)" comment="permission"/>
         </addColumn>
+    </changeSet>
+    <changeSet type="pendingDrops">
+        <dropColumn columnName="url_status" tableName="sys_resource"/>
     </changeSet>
 </migration>

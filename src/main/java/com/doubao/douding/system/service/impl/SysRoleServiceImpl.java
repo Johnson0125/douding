@@ -8,7 +8,6 @@ import com.doubao.douding.system.entity.query.QSysRole;
 import com.doubao.douding.system.service.SysRoleService;
 import io.ebean.PagedList;
 import jakarta.annotation.Resource;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
