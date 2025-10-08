@@ -1,10 +1,17 @@
 package com.doubao.douding.system.controller;
 
 import com.doubao.douding.DoudingApplication;
+import com.doubao.douding.system.dto.SysRoleDTO;
+import com.doubao.douding.system.dto.SysUserRoleDTO;
 import com.doubao.douding.system.dto.UserInfoDTO;
 import com.doubao.douding.system.dto.mapper.UserInfoMapper;
+import com.doubao.douding.system.entity.SysRole;
+import com.doubao.douding.system.entity.SysUserRole;
 import com.doubao.douding.system.enums.UserEnum;
 import com.doubao.douding.system.security.JwtUtils;
+import com.doubao.douding.system.service.SysRoleService;
+import com.doubao.douding.system.service.SysUserRoleService;
+import com.doubao.douding.system.service.UserInfoService;
 import com.doubao.douding.util.JsonUtils;
 import com.google.common.collect.Lists;
 import jakarta.annotation.Resource;
@@ -64,6 +71,15 @@ class UserControllerTest extends BaseControllerTest {
 
     private List<UserInfoDTO> userInfoDTOS;
 
+    @Resource
+    private UserInfoService userInfoService;
+
+    @Resource
+    private SysRoleService sysRoleService;
+
+    @Resource
+    private SysUserRoleService sysUserRoleService;
+
     @BeforeEach
     public void setup() {
 
@@ -109,6 +125,42 @@ class UserControllerTest extends BaseControllerTest {
                    .andReturn()
                    .getResponse()
                    .getContentAsString(StandardCharsets.UTF_8);
+        }
+
+        @Test
+        @SneakyThrows
+        void addUser_withRole_thenStatusOk() {
+            List<SysRoleDTO> sysRoleDTOS = Lists.newArrayList();
+
+            SysRoleDTO sysRoleDTO = SysRoleDTO.builder().roleStatus(1).roleName("user management").build();
+            sysRoleDTO = sysRoleService.add(sysRoleDTO);
+            sysRoleDTOS.add(sysRoleDTO);
+
+            sysRoleDTO = SysRoleDTO.builder().roleStatus(1).roleName("admin management").build();
+            sysRoleDTO = sysRoleService.add(sysRoleDTO);
+            sysRoleDTOS.add(sysRoleDTO);
+
+            userInfoDTO.setRoles(sysRoleDTOS);
+            userInfoDTO.setId(null);
+
+            final String contentAsString = mockMvc.perform(post("/userInfo/add").contentType(MediaType.APPLICATION_JSON)
+                                                                                .accept(MediaType.APPLICATION_JSON)
+                                                                                .content(JsonUtils.toJsonString(
+                                                                                    userInfoDTO)))
+                                                  .andExpect(status().isCreated())
+                                                  .andDo(print())
+                                                  .andExpect(jsonPath("$.email").value(userInfoDTO.getEmail()))
+                                                  .andExpect(jsonPath("$.username").value(userInfoDTO.getUsername()))
+                                                  .andExpect(jsonPath("$.telephone").value(userInfoDTO.getTelephone()))
+                                                  .andExpect(jsonPath("$.id").exists())
+                                                  .andReturn()
+                                                  .getResponse()
+                                                  .getContentAsString(StandardCharsets.UTF_8);
+            final UserInfoDTO result = JsonUtils.toObject(contentAsString, UserInfoDTO.class);
+            userInfoDTO.setId(result.getId());
+
+            List<SysUserRoleDTO> sysUserRoleDTOS = sysUserRoleService.getRoleForUser(userInfoDTO);
+            assertThat(sysUserRoleDTOS.size()).isEqualTo(2);
         }
     }
 

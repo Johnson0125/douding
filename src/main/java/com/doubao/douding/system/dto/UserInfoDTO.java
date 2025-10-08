@@ -60,7 +60,8 @@ public class UserInfoDTO extends BaseDTO {
 
     private Integer userStatus;
 
-    private List<SysUserRole> roles;
+    @Schema(description = "role list")
+    private List<SysRoleDTO> roles;
 
     @Size(groups = {
         Create.class

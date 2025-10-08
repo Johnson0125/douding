@@ -4,20 +4,18 @@ import com.doubao.douding.common.dto.PageResultDTO;
 import com.doubao.douding.system.dto.SysResourceDTO;
 import com.doubao.douding.system.dto.mapper.SysResourceMapper;
 import com.doubao.douding.system.entity.SysResource;
-import com.doubao.douding.system.entity.SysRole;
 import com.doubao.douding.system.entity.query.QSysResource;
-import com.doubao.douding.system.entity.query.QSysRole;
 import com.doubao.douding.system.service.SysResourceService;
 import io.ebean.PagedList;
-import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class SysResourceServiceImpl implements SysResourceService {
 
-    @Resource
-    private SysResourceMapper sysResourceMapper;
+    private final SysResourceMapper sysResourceMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)

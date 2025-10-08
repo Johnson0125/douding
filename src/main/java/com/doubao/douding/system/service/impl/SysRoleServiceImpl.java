@@ -8,6 +8,7 @@ import com.doubao.douding.system.entity.query.QSysRole;
 import com.doubao.douding.system.service.SysRoleService;
 import io.ebean.PagedList;
 import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
  * @Description TODO
  */
 @Service
+@RequiredArgsConstructor
 public class SysRoleServiceImpl implements SysRoleService {
 
-    @Resource
-    private SysRoleMapper sysRoleMapper;
+    private final SysRoleMapper sysRoleMapper;
 
     /**
      * add

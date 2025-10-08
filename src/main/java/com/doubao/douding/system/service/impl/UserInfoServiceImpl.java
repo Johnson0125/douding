@@ -1,11 +1,16 @@
 package com.doubao.douding.system.service.impl;
 
 import com.doubao.douding.system.dto.LoginDTO;
+import com.doubao.douding.system.dto.SysRoleDTO;
+import com.doubao.douding.system.dto.SysUserRoleDTO;
 import com.doubao.douding.system.dto.UserInfoDTO;
 import com.doubao.douding.system.dto.mapper.UserInfoMapper;
+import com.doubao.douding.system.entity.SysRole;
+import com.doubao.douding.system.entity.SysUserRole;
 import com.doubao.douding.system.entity.UserInfo;
 import com.doubao.douding.system.entity.query.QUserInfo;
 import com.doubao.douding.system.repository.UserInfoRepository;
+import com.doubao.douding.system.service.SysUserRoleService;
 import com.doubao.douding.system.service.UserInfoService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +34,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final SysUserRoleService sysUserRoleService;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public UserInfoDTO save(UserInfoDTO userInfoDto) {
@@ -37,6 +44,17 @@ public class UserInfoServiceImpl implements UserInfoService {
             entity.setPassword(passwordEncoder.encode(userInfoDto.getPassword()).toCharArray());
         }
         entity.save();
+
+        final List<SysRoleDTO> roles = userInfoDto.getRoles();
+        for (SysRoleDTO roleDTO : roles) {
+            SysRole role = new SysRole();
+            role.setId(roleDTO.getId());
+
+            SysUserRole sysUserRole = new SysUserRole();
+            sysUserRole.setUser(entity);
+            sysUserRole.setRole(role);
+            sysUserRoleService.save(sysUserRole);
+        }
         return convertToDTO(entity);
     }
 

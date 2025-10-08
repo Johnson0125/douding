@@ -1,6 +1,8 @@
 package com.doubao.douding.system.dto.mapper;
 
+import com.doubao.douding.system.dto.SysUserRoleDTO;
 import com.doubao.douding.system.dto.UserInfoDTO;
+import com.doubao.douding.system.entity.SysUserRole;
 import com.doubao.douding.system.entity.UserInfo;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -9,6 +11,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
+import org.mapstruct.SubclassMapping;
 
 /**
  * @author Johnson

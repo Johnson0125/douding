@@ -1,6 +1,8 @@
 package com.doubao.douding.system.entity;
 
 import com.doubao.douding.common.entity.BaseDomain;
+import com.doubao.douding.system.entity.finder.SysRoleFinder;
+import com.doubao.douding.system.entity.finder.SysUserRoleFinder;
 import io.ebean.annotation.DbComment;
 import io.ebean.annotation.Length;
 import io.ebean.annotation.NotNull;
@@ -26,6 +28,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class SysUserRole extends BaseDomain {
+
+    public static final SysUserRoleFinder FIND = new SysUserRoleFinder(SysUserRole.class);
+
     @NotNull
     @Length(19)
     @DbComment("user id")
