@@ -45,7 +45,6 @@ public class SysResource extends BaseDomain {
     @DbComment("resource type, 1:dir,2:menu,3:button")
     private Integer resourceType;
 
-    @NotNull
     @Length(50)
     @DbComment("resource url")
     private String url;

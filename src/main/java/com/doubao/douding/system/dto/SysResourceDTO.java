@@ -23,7 +23,7 @@ import org.hibernate.validator.constraints.Range;
 public class SysResourceDTO extends BaseDTO {
 
     @Schema(title = "parent id")
-    private SysResource parent;
+    private SysResourceDTO parent;
 
     @NotNull(groups = {
         Create.class,

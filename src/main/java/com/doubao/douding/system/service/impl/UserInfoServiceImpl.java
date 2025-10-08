@@ -2,18 +2,19 @@ package com.doubao.douding.system.service.impl;
 
 import com.doubao.douding.system.dto.LoginDTO;
 import com.doubao.douding.system.dto.SysRoleDTO;
-import com.doubao.douding.system.dto.SysUserRoleDTO;
 import com.doubao.douding.system.dto.UserInfoDTO;
 import com.doubao.douding.system.dto.mapper.UserInfoMapper;
 import com.doubao.douding.system.entity.SysRole;
 import com.doubao.douding.system.entity.SysUserRole;
 import com.doubao.douding.system.entity.UserInfo;
+import com.doubao.douding.system.entity.query.QSysUserRole;
 import com.doubao.douding.system.entity.query.QUserInfo;
 import com.doubao.douding.system.repository.UserInfoRepository;
 import com.doubao.douding.system.service.SysUserRoleService;
 import com.doubao.douding.system.service.UserInfoService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,15 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
         entity.save();
 
+        updateRelatedSysUserRole(userInfoDto, entity);
+        return convertToDTO(entity);
+    }
+
+    private void updateRelatedSysUserRole(final UserInfoDTO userInfoDto, final UserInfo entity) {
+        new QSysUserRole().user.id.eq(entity.getId()).delete();
+        if (CollectionUtils.isEmpty(userInfoDto.getRoles())) {
+            return;
+        }
         final List<SysRoleDTO> roles = userInfoDto.getRoles();
         for (SysRoleDTO roleDTO : roles) {
             SysRole role = new SysRole();
@@ -55,7 +65,6 @@ public class UserInfoServiceImpl implements UserInfoService {
             sysUserRole.setRole(role);
             sysUserRoleService.save(sysUserRole);
         }
-        return convertToDTO(entity);
     }
 
     @Override
@@ -68,6 +77,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     public UserInfoDTO update(UserInfoDTO userInfoDto) {
         UserInfo userInfo = convertToEntity(userInfoDto);
         userInfo.update();
+        updateRelatedSysUserRole(userInfoDto, userInfo);
         return convertToDTO(userInfo);
     }
 

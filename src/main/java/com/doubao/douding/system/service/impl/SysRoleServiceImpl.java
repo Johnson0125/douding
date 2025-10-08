@@ -1,14 +1,20 @@
 package com.doubao.douding.system.service.impl;
 
 import com.doubao.douding.common.dto.PageResultDTO;
+import com.doubao.douding.system.dto.SysResourceDTO;
 import com.doubao.douding.system.dto.SysRoleDTO;
 import com.doubao.douding.system.dto.mapper.SysRoleMapper;
+import com.doubao.douding.system.entity.SysResource;
 import com.doubao.douding.system.entity.SysRole;
+import com.doubao.douding.system.entity.SysRoleResource;
 import com.doubao.douding.system.entity.query.QSysRole;
+import com.doubao.douding.system.entity.query.QSysRoleResource;
 import com.doubao.douding.system.service.SysRoleService;
 import io.ebean.PagedList;
 import jakarta.annotation.Resource;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +39,27 @@ public class SysRoleServiceImpl implements SysRoleService {
     public SysRoleDTO add(final SysRoleDTO sysRoleDTO) {
         SysRole sysRole = sysRoleMapper.toEntity(sysRoleDTO);
         sysRole.save();
+
+        updateRelatedSysRoleResource(sysRoleDTO, sysRole);
         return sysRoleMapper.toDTO(sysRole);
+    }
+
+    private static void updateRelatedSysRoleResource(final SysRoleDTO sysRoleDTO, final SysRole sysRole) {
+        new QSysRoleResource().sysRole.id.eq(sysRole.getId()).delete();
+        if (CollectionUtils.isEmpty(sysRoleDTO.getResources())) {
+            return;
+        }
+
+        final List<SysResourceDTO> resources = sysRoleDTO.getResources();
+        for (SysResourceDTO resource : resources) {
+            SysRoleResource sysRoleResource = new SysRoleResource();
+            sysRoleResource.setSysRole(sysRole);
+            SysResource sysResource = new SysResource();
+            sysResource.setId(resource.getId());
+
+            sysRoleResource.setSysResource(sysResource);
+            sysRoleResource.save();
+        }
     }
 
     /**
@@ -71,6 +97,7 @@ public class SysRoleServiceImpl implements SysRoleService {
     public SysRoleDTO update(final SysRoleDTO sysRoleDTO) {
         SysRole sysRole = sysRoleMapper.toEntity(sysRoleDTO);
         sysRole.update();
+        updateRelatedSysRoleResource(sysRoleDTO, sysRole);
         return sysRoleMapper.toDTO(sysRole);
     }
 

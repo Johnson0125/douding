@@ -2,9 +2,8 @@ package com.doubao.douding.system.entity;
 
 import com.doubao.douding.common.entity.BaseDomain;
 import io.ebean.annotation.DbComment;
-import io.ebean.annotation.Length;
-import io.ebean.annotation.NotNull;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,13 +25,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SysRoleResource extends BaseDomain {
 
-    @NotNull
-    @Length(19)
     @DbComment("role id")
-    private Long roleId;
+    @ManyToOne
+    private SysRole sysRole;
 
-    @NotNull
-    @Length(19)
     @DbComment("resource id")
-    private Long resourceId;
+    @ManyToOne
+    private SysResource sysResource;
 }

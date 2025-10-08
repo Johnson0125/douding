@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -45,4 +46,8 @@ public class SysRoleDTO extends BaseDTO {
         Update.class
     }, max = 100, message = "remark length should less than 100")
     private String remark;
+
+    @Schema(title = "resources")
+    private List<SysResourceDTO> resources;
 }
+
